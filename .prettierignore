@@ -1,0 +1,4 @@
+# includes all .gitignores by default
+ios/
+android/
+assets/
