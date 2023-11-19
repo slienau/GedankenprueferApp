@@ -1,19 +1,28 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+
+import universelleGS from "../resources/universelle-glaubenssaetze";
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Gedankenprüfer App Home Screen</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        <Text>Gedankenprüfer App Home Screen</Text>
+        {universelleGS.map((gs) => (
+          <Text key={gs}>{gs}</Text>
+        ))}
+        <StatusBar style="auto" />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: "#fff",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
