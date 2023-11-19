@@ -1,4 +1,4 @@
-import AppNavigator from "./app/AppNavigator";
+import AppNavigator from "./src/AppNavigator";
 
 export default function App() {
   return <AppNavigator />;
