@@ -1,19 +1,10 @@
-import { SafeAreaView, StyleSheet } from "react-native";
-import { TopNavigation } from "@ui-kitten/components";
-
+import AppScreenLayout from "../AppScreenLayout";
 import GlaubenssatzListe from "./GlaubenssatzListe";
 
 export default function GlaubenssaetzeScreen() {
   return (
-    <SafeAreaView style={styles.root}>
-      <TopNavigation title={"Glaubenssätze"} alignment={"center"} />
+    <AppScreenLayout title={"Glaubenssätze"}>
       <GlaubenssatzListe />
-    </SafeAreaView>
+    </AppScreenLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    backgroundColor: "#fff",
-  },
-});
