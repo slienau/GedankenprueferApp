@@ -17,13 +17,14 @@ export default function GlaubenssatzListe() {
   const dispatch = useDispatch();
 
   const handleCardPress = useCallback((id: string) => {
-    dispatch(actions.select(id));
+    dispatch(actions.select({ id }));
+    // @ts-ignore
     navigation.navigate("Glaubenssatz");
   }, []);
 
   return (
     <List
-      data={glaubenssaetze}
+      data={Object.values(glaubenssaetze)}
       renderItem={({ item }) => (
         <Card style={styles.card} onPress={() => handleCardPress(item.id)}>
           <Text category={"h4"}>{item.title}</Text>

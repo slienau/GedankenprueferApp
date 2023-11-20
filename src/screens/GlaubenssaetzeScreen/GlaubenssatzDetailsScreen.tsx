@@ -2,11 +2,11 @@ import React from "react";
 import AppScreenLayout from "../AppScreenLayout";
 import { useSelector } from "react-redux";
 import { Input, Radio, RadioGroup, Text } from "@ui-kitten/components";
-import { RootState } from "../../store";
 import { ScrollView, StyleSheet, View } from "react-native";
+import { getSelectedGs } from "./glaubenssaetzeSlice";
 
 export default function GlaubenssatzDetailsScreen() {
-  const gs = useSelector((state: RootState) => state.glaubenssaetze.selected);
+  const gs = useSelector(getSelectedGs);
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
 
   return (

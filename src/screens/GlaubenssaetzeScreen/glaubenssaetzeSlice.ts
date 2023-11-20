@@ -1,27 +1,46 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import * as Crypto from "expo-crypto";
+import _ from "lodash";
 
 import universelleGS from "../../resources/universelle-glaubenssaetze";
+import { RootState } from "../../store";
+
+type TheWorkQuestionType = {
+  isThatTrue: "yes" | "no";
+  isThatAbsolutelyTrue: "yes" | "no";
+  whatHappensIfYouBelieveTheThought: Array<string>;
+  whoWouldYouBeWithoutTheThought: Array<string>;
+  inversions: Array<{
+    title: string;
+    examples: Array<string>;
+  }>;
+};
 
 export type GlaubenssatzDataItem = {
   id: string;
   title: string;
+  theWork?: TheWorkQuestionType;
 };
 
 export interface GlaubenssaetzeState {
-  entities: Array<GlaubenssatzDataItem>;
-  selected: GlaubenssatzDataItem | null;
+  entities: Record<string, GlaubenssatzDataItem>;
+  selectedId: GlaubenssatzDataItem["id"] | null;
 }
 
 const initialState: GlaubenssaetzeState = {
-  entities: universelleGS.map((gs) => {
-    return {
-      id: Crypto.randomUUID(),
-      title: gs,
-    };
-  }),
-  selected: null,
+  entities: universelleGS.reduce(
+    (acc: Record<string, GlaubenssatzDataItem>, gs: string) => {
+      const id = Crypto.randomUUID();
+      acc[id] = {
+        id,
+        title: gs,
+      };
+      return acc;
+    },
+    {},
+  ),
+  selectedId: null,
 };
 
 export const glaubenssaetzeSlice = createSlice({
@@ -33,19 +52,24 @@ export const glaubenssaetzeSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.entities.push({
+      const id = Crypto.randomUUID();
+      state.entities[id] = {
         id: Crypto.randomUUID(),
         title: action.payload,
-      });
+      };
     },
-    remove: (state, action: PayloadAction<string>) => {
-      state.entities = state.entities.filter(
-        (item) => item.id !== action.payload,
-      );
+    remove: (state, action: PayloadAction<{ id: string }>) => {
+      delete state.entities[action.payload.id];
     },
-    select: (state, action: PayloadAction<string>) => {
-      state.selected =
-        state.entities.find((el) => el.id === action.payload) ?? null;
+    select: (state, action: PayloadAction<{ id: string }>) => {
+      state.selectedId = action.payload.id;
+    },
+    update: (
+      state,
+      action: PayloadAction<{ id: string } & Partial<GlaubenssatzDataItem>>,
+    ) => {
+      const { payload } = action;
+      state.entities[payload.id] = _.merge(state.entities[payload.id], payload);
     },
   },
 });
@@ -54,3 +78,17 @@ export const glaubenssaetzeSlice = createSlice({
 export const actions = glaubenssaetzeSlice.actions;
 
 export const glaubenssaetzeReducer = glaubenssaetzeSlice.reducer;
+
+// selectors
+const getDataState = (state: RootState) => state.glaubenssaetze.entities;
+const getSelectedId = (state: RootState) => state.glaubenssaetze.selectedId;
+
+export const getSelectedGs = createSelector(
+  [getDataState, getSelectedId],
+  (data, selectedId) => {
+    if (selectedId === null) {
+      return null; // or handle the case when selectedId is null
+    }
+    return data[selectedId];
+  },
+);
