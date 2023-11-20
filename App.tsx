@@ -1,5 +1,3 @@
-import AppNavigator from "./src/AppNavigator";
+import AppRoot from "./src/AppRoot";
 
-export default function App() {
-  return <AppNavigator />;
-}
+export default AppRoot;
