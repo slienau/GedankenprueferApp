@@ -1,32 +1,30 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { GlaubenssatzDataItem } from "./glaubenssaetzeSlice";
-
-const renderItem = ({
-  item,
-  index,
-}: {
-  item: GlaubenssatzDataItem;
-  index: number;
-}): React.ReactElement => (
-  <Card style={styles.card}>
-    <Text>{item.title}</Text>
-  </Card>
-);
 
 export default function GlaubenssatzListe() {
   const glaubenssaetze = useSelector(
     (state: RootState) => state.glaubenssaetze.entities,
   );
+  const navigation = useNavigation();
+
+  const handleCardPress = useCallback(() => {
+    navigation.navigate("Glaubenssatz");
+  }, []);
+
   return (
     <List
       data={glaubenssaetze}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.title}
+      renderItem={({ item }) => (
+        <Card style={styles.card} onPress={handleCardPress}>
+          <Text>{item.title}</Text>
+        </Card>
+      )}
+      keyExtractor={(item) => item.id}
     />
   );
 }
