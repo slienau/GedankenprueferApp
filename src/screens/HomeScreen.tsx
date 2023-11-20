@@ -1,28 +1,32 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Layout, Text } from "@ui-kitten/components";
+import { Divider, Layout, Text, TopNavigation } from "@ui-kitten/components";
 
 import universelleGS from "../resources/universelle-glaubenssaetze";
 
 export default function HomeScreen() {
   return (
-    <ScrollView style={styles.scrollView}>
-      <Layout style={styles.container}>
-        <Text>Gedankenprüfer App Home Screen</Text>
-        {universelleGS.map((gs) => (
-          <Text key={gs}>{gs}</Text>
-        ))}
-        <StatusBar style="auto" />
-      </Layout>
-    </ScrollView>
+    <SafeAreaView style={styles.root}>
+      <TopNavigation title={"Home"} alignment={"center"} />
+      <ScrollView>
+        <Divider />
+        <Layout style={styles.body}>
+          <Text>Gedankenprüfer App Home Screen</Text>
+          {universelleGS.map((gs) => (
+            <Text key={gs}>{gs}</Text>
+          ))}
+          <StatusBar style="auto" />
+        </Layout>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
+  root: {
     backgroundColor: "#fff",
   },
-  container: {
+  body: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
