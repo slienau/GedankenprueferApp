@@ -9,10 +9,10 @@ import { RootState } from "../../store";
 export type GlaubenssatzDataItem = {
   id: string;
   title: string;
-  isThatTrue?: boolean;
-  isThatAbsolutelyTrue?: boolean;
-  whatHappensIfYouBelieveTheThought?: string;
-  whoWouldYouBeWithoutTheThought?: string;
+  q1_isThatTrue?: boolean;
+  q2_isThatAbsolutelyTrue?: boolean;
+  q3_whatHappensIfYouBelieveTheThought?: string;
+  q4_whoWouldYouBeWithoutTheThought?: string;
   inversions: Record<string, Array<string>>; // key: inversion: value: array of examples
 };
 

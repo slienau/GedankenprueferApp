@@ -9,7 +9,18 @@ export default function Question4() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
 
-  if (gs == null) return null;
+  const handleChangeText = React.useCallback(
+    (text: string) => {
+      if (!gs) return;
+      dispatch(
+        actions.update({
+          id: gs.id,
+          q4_whoWouldYouBeWithoutTheThought: text,
+        }),
+      );
+    },
+    [gs],
+  );
 
   return (
     <View style={styles.root}>
@@ -19,15 +30,8 @@ export default function Question4() {
         multiline={true}
         textStyle={styles.inputTextStyle}
         style={styles.inputTextContainer}
-        value={gs.whoWouldYouBeWithoutTheThought}
-        onChangeText={(text) =>
-          dispatch(
-            actions.update({
-              id: gs.id,
-              whoWouldYouBeWithoutTheThought: text,
-            }),
-          )
-        }
+        value={gs?.q4_whoWouldYouBeWithoutTheThought}
+        onChangeText={handleChangeText}
       />
     </View>
   );

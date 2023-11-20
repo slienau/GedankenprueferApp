@@ -1,6 +1,6 @@
 import React from "react";
 import AppScreenLayout from "../AppScreenLayout";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Text } from "@ui-kitten/components";
 import { ScrollView, StyleSheet } from "react-native";
 import { getSelectedGs } from "./glaubenssaetzeSlice";

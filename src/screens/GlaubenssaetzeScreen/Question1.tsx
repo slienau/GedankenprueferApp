@@ -11,17 +11,17 @@ export default function Question1() {
 
   if (gs == null) return null;
 
+  const selectedIndex =
+    gs.q1_isThatTrue === true ? 0 : gs.q1_isThatTrue === false ? 1 : -1;
+
+  const handleChange = (index: number) => {
+    dispatch(actions.update({ id: gs.id, q1_isThatTrue: index === 0 }));
+  };
+
   return (
     <View style={styles.root}>
       <Text category={"h5"}>Ist das wahr?</Text>
-      <RadioGroup
-        selectedIndex={
-          gs.isThatTrue === true ? 0 : gs.isThatTrue === false ? 1 : -1
-        }
-        onChange={(index: number) => {
-          dispatch(actions.update({ id: gs.id, isThatTrue: index === 0 }));
-        }}
-      >
+      <RadioGroup selectedIndex={selectedIndex} onChange={handleChange}>
         <Radio>Ja</Radio>
         <Radio>Nein</Radio>
       </RadioGroup>

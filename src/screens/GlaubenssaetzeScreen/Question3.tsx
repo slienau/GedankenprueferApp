@@ -9,7 +9,18 @@ export default function Question3() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
 
-  if (gs == null) return null;
+  const handleChangeText = React.useCallback(
+    (text: string) => {
+      if (!gs) return;
+      dispatch(
+        actions.update({
+          id: gs.id,
+          q3_whatHappensIfYouBelieveTheThought: text,
+        }),
+      );
+    },
+    [gs],
+  );
 
   return (
     <View style={styles.root}>
@@ -31,15 +42,8 @@ export default function Question3() {
         multiline={true}
         textStyle={styles.inputTextStyle}
         style={styles.inputTextContainer}
-        value={gs.whatHappensIfYouBelieveTheThought}
-        onChangeText={(text) =>
-          dispatch(
-            actions.update({
-              id: gs.id,
-              whatHappensIfYouBelieveTheThought: text,
-            }),
-          )
-        }
+        value={gs?.q3_whatHappensIfYouBelieveTheThought}
+        onChangeText={handleChangeText}
       />
     </View>
   );

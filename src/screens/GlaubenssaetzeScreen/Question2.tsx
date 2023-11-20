@@ -11,25 +11,25 @@ export default function Question2() {
 
   if (gs == null) return null;
 
+  const handleChange = (index: number) => {
+    dispatch(
+      actions.update({ id: gs.id, q2_isThatAbsolutelyTrue: index === 0 }),
+    );
+  };
+
+  const selectedIndex: number =
+    gs.q2_isThatAbsolutelyTrue === true
+      ? 0 // yes
+      : gs.q2_isThatAbsolutelyTrue === false
+        ? 1 // no
+        : -1; // undefined
+
   return (
     <View style={styles.root}>
       <Text category={"h5"}>
         Kannst du mit absoluter Sicherheit wissen, dass das wahr ist?
       </Text>
-      <RadioGroup
-        selectedIndex={
-          gs.isThatAbsolutelyTrue === true
-            ? 0
-            : gs.isThatAbsolutelyTrue === false
-              ? 1
-              : -1
-        }
-        onChange={(index: number) => {
-          dispatch(
-            actions.update({ id: gs.id, isThatAbsolutelyTrue: index === 0 }),
-          );
-        }}
-      >
+      <RadioGroup selectedIndex={selectedIndex} onChange={handleChange}>
         <Radio>Ja</Radio>
         <Radio>Nein</Radio>
       </RadioGroup>
