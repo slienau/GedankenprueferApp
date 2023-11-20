@@ -2,23 +2,15 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 
-import universelleGS from "../../resources/universelle-glaubenssaetze";
-
-type GlaubenssatzDataType = {
-  title: string;
-};
-
-const data: Array<GlaubenssatzDataType> = universelleGS.map((gs) => {
-  return {
-    title: gs,
-  };
-});
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { GlaubenssatzDataItem } from "./glaubenssaetzeSlice";
 
 const renderItem = ({
   item,
   index,
 }: {
-  item: GlaubenssatzDataType;
+  item: GlaubenssatzDataItem;
   index: number;
 }): React.ReactElement => (
   <Card style={styles.card}>
@@ -27,9 +19,12 @@ const renderItem = ({
 );
 
 export default function GlaubenssatzListe() {
+  const glaubenssaetze = useSelector(
+    (state: RootState) => state.glaubenssaetze.entities,
+  );
   return (
     <List
-      data={data}
+      data={glaubenssaetze}
       renderItem={renderItem}
       keyExtractor={(item) => item.title}
     />
