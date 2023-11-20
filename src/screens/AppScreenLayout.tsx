@@ -1,8 +1,10 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import {
+  Divider,
   Icon,
   IconElement,
   IconProps,
+  Layout,
   TopNavigation,
   TopNavigationAction,
   TopNavigationProps,
@@ -39,13 +41,15 @@ const AppScreenLayout: React.FC<AppScreenLayoutProps> = (props) => {
         accessoryLeft={BackAction}
         {...props.topNavigationProps}
       />
-      {props.children}
+      <Divider />
+      <Layout>{props.children}</Layout>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
     backgroundColor: "#fff",
   },
 });

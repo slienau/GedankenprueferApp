@@ -7,7 +7,9 @@ export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector((state: RootState) => state.glaubenssaetze.selected);
   return (
     <AppScreenLayout title={"Glaubenssatz prüfen"}>
-      <Text category={"h1"}>{gs?.title ?? ""}</Text>
+      <Text category={"h1"} style={{ textAlign: "center" }}>
+        {gs?.title ?? ""}
+      </Text>
     </AppScreenLayout>
   );
 }
