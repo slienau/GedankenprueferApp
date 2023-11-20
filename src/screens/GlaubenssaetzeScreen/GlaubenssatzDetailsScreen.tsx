@@ -1,26 +1,32 @@
 import React from "react";
 import AppScreenLayout from "../AppScreenLayout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Input, Radio, RadioGroup, Text } from "@ui-kitten/components";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { getSelectedGs } from "./glaubenssaetzeSlice";
+import { getSelectedGs, actions } from "./glaubenssaetzeSlice";
 
 export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector(getSelectedGs);
-  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  const dispatch = useDispatch();
+
+  if (gs == null) return null;
 
   return (
     <AppScreenLayout title={"Glaubenssatz prüfen"} containerStyle={styles.root}>
       <ScrollView>
         <Text category={"h1"} style={styles.header}>
-          {gs?.title ?? ""}
+          {gs.title}
         </Text>
 
         <View style={styles.groupContainer}>
           <Text category={"h5"}>Ist das wahr?</Text>
           <RadioGroup
-            selectedIndex={selectedIndex}
-            onChange={(index) => setSelectedIndex(index)}
+            selectedIndex={
+              gs.isThatTrue === true ? 0 : gs.isThatTrue === false ? 1 : -1
+            }
+            onChange={(index: number) => {
+              dispatch(actions.update({ ...gs, isThatTrue: index === 0 }));
+            }}
           >
             <Radio>Ja</Radio>
             <Radio>Nein</Radio>
@@ -32,8 +38,18 @@ export default function GlaubenssatzDetailsScreen() {
             Kannst du mit absoluter Sicherheit wissen, dass das wahr ist?
           </Text>
           <RadioGroup
-            selectedIndex={selectedIndex}
-            onChange={(index) => setSelectedIndex(index)}
+            selectedIndex={
+              gs.isThatAbsolutelyTrue === true
+                ? 0
+                : gs.isThatAbsolutelyTrue === false
+                  ? 1
+                  : -1
+            }
+            onChange={(index: number) => {
+              dispatch(
+                actions.update({ ...gs, isThatAbsolutelyTrue: index === 0 }),
+              );
+            }}
           >
             <Radio>Ja</Radio>
             <Radio>Nein</Radio>
@@ -59,6 +75,15 @@ export default function GlaubenssatzDetailsScreen() {
             multiline={true}
             textStyle={styles.inputTextStyle}
             style={styles.inputTextContainer}
+            value={gs.whatHappensIfYouBelieveTheThought}
+            onChangeText={(text) =>
+              dispatch(
+                actions.update({
+                  id: gs.id,
+                  whatHappensIfYouBelieveTheThought: text,
+                }),
+              )
+            }
           />
         </View>
 
@@ -69,6 +94,15 @@ export default function GlaubenssatzDetailsScreen() {
             multiline={true}
             textStyle={styles.inputTextStyle}
             style={styles.inputTextContainer}
+            value={gs.whoWouldYouBeWithoutTheThought}
+            onChangeText={(text) =>
+              dispatch(
+                actions.update({
+                  id: gs.id,
+                  whoWouldYouBeWithoutTheThought: text,
+                }),
+              )
+            }
           />
         </View>
       </ScrollView>

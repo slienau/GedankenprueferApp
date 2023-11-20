@@ -6,21 +6,14 @@ import _ from "lodash";
 import universelleGS from "../../resources/universelle-glaubenssaetze";
 import { RootState } from "../../store";
 
-type TheWorkQuestionType = {
-  isThatTrue: "yes" | "no";
-  isThatAbsolutelyTrue: "yes" | "no";
-  whatHappensIfYouBelieveTheThought: Array<string>;
-  whoWouldYouBeWithoutTheThought: Array<string>;
-  inversions: Array<{
-    title: string;
-    examples: Array<string>;
-  }>;
-};
-
 export type GlaubenssatzDataItem = {
   id: string;
   title: string;
-  theWork?: TheWorkQuestionType;
+  isThatTrue?: boolean;
+  isThatAbsolutelyTrue?: boolean;
+  whatHappensIfYouBelieveTheThought?: string;
+  whoWouldYouBeWithoutTheThought?: string;
+  inversions: Record<string, Array<string>>; // key: inversion: value: array of examples
 };
 
 export interface GlaubenssaetzeState {
@@ -35,6 +28,7 @@ const initialState: GlaubenssaetzeState = {
       acc[id] = {
         id,
         title: gs,
+        inversions: {},
       };
       return acc;
     },
@@ -56,6 +50,7 @@ export const glaubenssaetzeSlice = createSlice({
       state.entities[id] = {
         id: Crypto.randomUUID(),
         title: action.payload,
+        inversions: {},
       };
     },
     remove: (state, action: PayloadAction<{ id: string }>) => {
@@ -66,8 +61,11 @@ export const glaubenssaetzeSlice = createSlice({
     },
     update: (
       state,
-      action: PayloadAction<{ id: string } & Partial<GlaubenssatzDataItem>>,
+      action: PayloadAction<
+        { id: string } & Partial<Omit<GlaubenssatzDataItem, "inversions">>
+      >,
     ) => {
+      console.log("update GS", action.payload);
       const { payload } = action;
       state.entities[payload.id] = _.merge(state.entities[payload.id], payload);
     },
