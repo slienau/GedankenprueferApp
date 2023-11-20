@@ -5,6 +5,7 @@ import {
   IconElement,
   IconProps,
   Layout,
+  LayoutProps,
   TopNavigation,
   TopNavigationAction,
   TopNavigationProps,
@@ -16,6 +17,7 @@ export interface AppScreenLayoutProps {
   title?: string;
   topNavigationProps?: TopNavigationProps;
   children?: React.ReactNode;
+  containerStyle?: LayoutProps["style"];
 }
 
 const BackIcon = (props: IconProps): IconElement => (
@@ -42,7 +44,7 @@ const AppScreenLayout: React.FC<AppScreenLayoutProps> = (props) => {
         {...props.topNavigationProps}
       />
       <Divider />
-      <Layout>{props.children}</Layout>
+      <Layout style={props.containerStyle}>{props.children}</Layout>
     </SafeAreaView>
   );
 };
