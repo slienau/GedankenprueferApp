@@ -2,6 +2,9 @@ import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+
+import { actions } from "./glaubenssaetzeSlice";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -11,8 +14,10 @@ export default function GlaubenssatzListe() {
     (state: RootState) => state.glaubenssaetze.entities,
   );
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  const handleCardPress = useCallback(() => {
+  const handleCardPress = useCallback((id: string) => {
+    dispatch(actions.select(id));
     navigation.navigate("Glaubenssatz");
   }, []);
 
@@ -20,8 +25,8 @@ export default function GlaubenssatzListe() {
     <List
       data={glaubenssaetze}
       renderItem={({ item }) => (
-        <Card style={styles.card} onPress={handleCardPress}>
-          <Text>{item.title}</Text>
+        <Card style={styles.card} onPress={() => handleCardPress(item.id)}>
+          <Text category={"h4"}>{item.title}</Text>
         </Card>
       )}
       keyExtractor={(item) => item.id}
@@ -31,6 +36,6 @@ export default function GlaubenssatzListe() {
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 10,
+    marginVertical: 20,
   },
 });

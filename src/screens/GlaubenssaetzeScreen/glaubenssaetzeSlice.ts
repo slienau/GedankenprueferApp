@@ -11,6 +11,7 @@ export type GlaubenssatzDataItem = {
 
 export interface GlaubenssaetzeState {
   entities: Array<GlaubenssatzDataItem>;
+  selected: GlaubenssatzDataItem | null;
 }
 
 const initialState: GlaubenssaetzeState = {
@@ -20,6 +21,7 @@ const initialState: GlaubenssaetzeState = {
       title: gs,
     };
   }),
+  selected: null,
 };
 
 export const glaubenssaetzeSlice = createSlice({
@@ -41,10 +43,14 @@ export const glaubenssaetzeSlice = createSlice({
         (item) => item.id !== action.payload,
       );
     },
+    select: (state, action: PayloadAction<string>) => {
+      state.selected =
+        state.entities.find((el) => el.id === action.payload) ?? null;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { add, remove } = glaubenssaetzeSlice.actions;
+export const actions = glaubenssaetzeSlice.actions;
 
 export const glaubenssaetzeReducer = glaubenssaetzeSlice.reducer;
