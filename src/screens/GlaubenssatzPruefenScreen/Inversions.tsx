@@ -41,17 +41,9 @@ export default function Inversions() {
   };
 
   const navigateToInversion = (inversion: string) => {
-    const examples = gs?.inversions[inversion];
-    const onAddExample = (example: string) => {
-      dispatch(
-        actions.addInversionExample({ gsId: gs.id, inversion, example }),
-      );
-    };
     // @ts-ignore
     navigation.navigate("UmkehrungPruefen", {
       inversion,
-      examples,
-      onAddExample,
     });
   };
 
@@ -86,6 +78,7 @@ export default function Inversions() {
         <Input
           value={inputValue}
           onChangeText={setInputValue}
+          onSubmitEditing={addInversion}
           placeholder={"Umkehrung hinzufügen..."}
           style={styles.newInversionInput}
         ></Input>
