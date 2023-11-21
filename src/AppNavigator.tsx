@@ -3,9 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GlaubenssaetzeScreen from "./screens/GlaubenssaetzeScreen";
 import GlaubenssatzDetailsScreen from "./screens/GlaubenssaetzeScreen/GlaubenssatzDetailsScreen";
 import GlaubenssatzPruefenScreen from "./screens/GlaubenssatzPruefenScreen";
-import UmkehrungPruefenScreen, {
-  UmkehrungPruefenScreenParams,
-} from "./screens/GlaubenssatzPruefenScreen/UmkehrungPruefenScreen";
+import UmkehrungPruefenScreen from "./screens/GlaubenssatzPruefenScreen/UmkehrungPruefenScreen";
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigator() {
@@ -30,12 +28,3 @@ export default function AppNavigator() {
     </NavigationContainer>
   );
 }
-
-export type RootStackParamList = {
-  UmkehrungPruefen: UmkehrungPruefenScreenParams;
-};
-
-export type UmkehrungPruefenScreenRouteProp = RouteProp<
-  RootStackParamList,
-  "UmkehrungPruefen"
->;

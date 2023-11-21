@@ -10,81 +10,62 @@ import {
   Text,
 } from "@ui-kitten/components";
 import AppScreenLayout from "../AppScreenLayout";
-import { UmkehrungPruefenScreenRouteProp } from "../../AppNavigator";
 import { useDispatch, useSelector } from "react-redux";
 import {
   actions,
-  getSelectedGs,
+  getSelectedInversion,
+  getSelectedInversionExamples,
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
-
-export type UmkehrungPruefenScreenParams = {
-  inversion: string;
-};
-
-type UmkehrungPruefenScreenProps = {
-  route: UmkehrungPruefenScreenRouteProp & {
-    params: UmkehrungPruefenScreenParams;
-  };
-  navigation: any;
-};
 
 const PlusIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="plus-circle-outline" />
 );
 
-const UmkehrungPruefenScreen: React.FC<UmkehrungPruefenScreenProps> =
-  function ({ route }) {
-    const gs = useSelector(getSelectedGs);
-    const dispatch = useDispatch();
-    const { inversion } = route.params;
+const UmkehrungPruefenScreen: React.FC<{}> = function () {
+  const dispatch = useDispatch();
 
-    if (gs == null) return null;
+  const examples = useSelector(getSelectedInversionExamples);
+  const inversion = useSelector(getSelectedInversion);
 
-    const examples: Array<string> = Object.values(gs.inversions[inversion]);
+  if (inversion == null || examples == null) return null;
 
-    const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState("");
 
-    const addExample = () => {
-      if (inputValue !== "") {
-        dispatch(
-          actions.addInversionExample({
-            gsId: gs.id,
-            inversion,
-            example: inputValue,
-          }),
-        );
-        setInputValue("");
-      }
-    };
+  const addExample = () => {
+    if (inputValue !== "") {
+      dispatch(
+        actions.addInversionExample({
+          example: inputValue,
+        }),
+      );
+      setInputValue("");
+    }
+  };
 
-    return (
-      <AppScreenLayout title={"Umkehrung prüfen"}>
-        <View style={styles.root}>
-          <Text category={"h1"}>{inversion}</Text>
-          <View style={styles.examplesContainer}>
-            {examples.map((example) => (
-              <Card
-                key={example}
-                style={styles.exampleCard}
-                // onPress={() => onAddExample(example)}
-              >
-                <Text>{example}</Text>
-              </Card>
-            ))}
-            <View>
-              <Input
-                placeholder={"Beispiel hinzufügen"}
-                value={inputValue}
-                onChangeText={setInputValue}
-                onSubmitEditing={addExample}
-              />
-              <Button onPress={addExample} accessoryLeft={PlusIcon} />
-            </View>
+  return (
+    <AppScreenLayout title={"Umkehrung prüfen"}>
+      <View style={styles.root}>
+        <Text category={"h1"}>{inversion}</Text>
+        <View style={styles.examplesContainer}>
+          {examples.map((example) => (
+            <Card key={`${inversion}-${example}`} style={styles.exampleCard}>
+              <Text>{example}</Text>
+            </Card>
+          ))}
+          <View>
+            <Input
+              placeholder={"Beispiel hinzufügen"}
+              value={inputValue}
+              onChangeText={setInputValue}
+              onSubmitEditing={addExample}
+            />
+            <Button onPress={addExample} accessoryLeft={PlusIcon} />
           </View>
         </View>
-      </AppScreenLayout>
-    );
-  };
+      </View>
+    </AppScreenLayout>
+  );
+};
 
 const styles = StyleSheet.create({
   root: {

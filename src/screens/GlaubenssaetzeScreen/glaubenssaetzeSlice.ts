@@ -20,7 +20,8 @@ export type GlaubenssatzDataItem = {
 
 export interface GlaubenssaetzeState {
   entities: Record<string, GlaubenssatzDataItem>;
-  selectedId: GlaubenssatzDataItem["id"] | null;
+  selectedGsId: GlaubenssatzDataItem["id"] | null;
+  selectedInversion: string | null;
 }
 
 const initialState: GlaubenssaetzeState = {
@@ -38,7 +39,8 @@ const initialState: GlaubenssaetzeState = {
     },
     {},
   ),
-  selectedId: null,
+  selectedGsId: null,
+  selectedInversion: null,
 };
 
 export const glaubenssaetzeSlice = createSlice({
@@ -62,8 +64,11 @@ export const glaubenssaetzeSlice = createSlice({
     remove: (state, action: PayloadAction<{ id: string }>) => {
       delete state.entities[action.payload.id];
     },
-    select: (state, action: PayloadAction<{ id: string }>) => {
-      state.selectedId = action.payload.id;
+    selectGs: (state, action: PayloadAction<{ id: string }>) => {
+      state.selectedGsId = action.payload.id;
+    },
+    selectInversion: (state, action: PayloadAction<{ inversion: string }>) => {
+      state.selectedInversion = action.payload.inversion;
     },
     update: (
       state,
@@ -94,14 +99,14 @@ export const glaubenssaetzeSlice = createSlice({
     addInversionExample: (
       state,
       action: PayloadAction<{
-        gsId: string;
-        inversion: string;
         example: string;
       }>,
     ) => {
+      if (state.selectedGsId === null || state.selectedInversion === null)
+        return;
       const { payload } = action;
-      const gs = state.entities[payload.gsId];
-      gs.inversions[payload.inversion].push(payload.example);
+      const gs = state.entities[state.selectedGsId];
+      gs.inversions[state.selectedInversion].push(payload.example);
       gs.dateUpdated = new Date();
     },
   },
@@ -114,14 +119,27 @@ export const glaubenssaetzeReducer = glaubenssaetzeSlice.reducer;
 
 // selectors
 const getDataState = (state: RootState) => state.glaubenssaetze.entities;
-const getSelectedId = (state: RootState) => state.glaubenssaetze.selectedId;
+const getSelectedGsId = (state: RootState) => state.glaubenssaetze.selectedGsId;
 
 export const getSelectedGs = createSelector(
-  [getDataState, getSelectedId],
+  [getDataState, getSelectedGsId],
   (data, selectedId) => {
     if (selectedId === null) {
       return null; // or handle the case when selectedId is null
     }
     return data[selectedId];
+  },
+);
+
+export const getSelectedInversion = (state: RootState) =>
+  state.glaubenssaetze.selectedInversion;
+
+export const getSelectedInversionExamples = createSelector(
+  [getSelectedGs, getSelectedInversion],
+  (gs, selectedInversion) => {
+    if (selectedInversion === null || gs === null) {
+      return null; // or handle the case when selectedId is null
+    }
+    return gs.inversions[selectedInversion];
   },
 );

@@ -41,10 +41,9 @@ export default function Inversions() {
   };
 
   const navigateToInversion = (inversion: string) => {
+    dispatch(actions.selectInversion({ inversion }));
     // @ts-ignore
-    navigation.navigate("UmkehrungPruefen", {
-      inversion,
-    });
+    navigation.navigate("UmkehrungPruefen");
   };
 
   return (
