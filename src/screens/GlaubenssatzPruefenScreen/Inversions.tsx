@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Button, Input, Text } from "@ui-kitten/components";
+import { Button, Card, Input, Text } from "@ui-kitten/components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   actions,
@@ -25,9 +25,22 @@ export default function Inversions() {
     <View style={styles.root}>
       <Text category={"h5"}>Umkehrungen</Text>
       {Object.keys(gs?.inversions ?? []).map((inversion) => (
-        <Text key={inversion}>{inversion}</Text>
+        <Card key={inversion}>
+          <Text category={"h6"}>{inversion}</Text>
+          <Button
+            onPress={() => {
+              dispatch(actions.removeInversion({ gsId: gs.id, inversion }));
+            }}
+          >
+            entfernen
+          </Button>
+        </Card>
       ))}
-      <Input value={inputValue} onChangeText={setInputValue}></Input>
+      <Input
+        value={inputValue}
+        onChangeText={setInputValue}
+        placeholder={"Umkehrung eingeben"}
+      ></Input>
       <Button onPress={addInversion}>Neue Umkehrung hinzufügen</Button>
     </View>
   );
