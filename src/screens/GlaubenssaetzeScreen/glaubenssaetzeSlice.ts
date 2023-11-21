@@ -13,7 +13,9 @@ export type GlaubenssatzDataItem = {
   q2_isThatAbsolutelyTrue?: boolean;
   q3_whatHappensIfYouBelieveTheThought?: string;
   q4_whoWouldYouBeWithoutTheThought?: string;
-  inversions: Record<string, Array<string>>; // key: inversion: value: array of examples
+  dateCreated: Date;
+  dateUpdated: Date;
+  inversions: Record<string, Array<string>>; // key: inversion; value: array of examples
 };
 
 export interface GlaubenssaetzeState {
@@ -28,6 +30,8 @@ const initialState: GlaubenssaetzeState = {
       acc[id] = {
         id,
         title: gs,
+        dateCreated: new Date(),
+        dateUpdated: new Date(),
         inversions: {},
       };
       return acc;
@@ -50,6 +54,8 @@ export const glaubenssaetzeSlice = createSlice({
       state.entities[id] = {
         id: Crypto.randomUUID(),
         title: action.payload,
+        dateCreated: new Date(),
+        dateUpdated: new Date(),
         inversions: {},
       };
     },
@@ -68,6 +74,7 @@ export const glaubenssaetzeSlice = createSlice({
       console.log("update GS", action.payload);
       const { payload } = action;
       state.entities[payload.id] = _.merge(state.entities[payload.id], payload);
+      state.entities[payload.id].dateUpdated = new Date();
     },
   },
 });
