@@ -1,8 +1,11 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GlaubenssaetzeScreen from "./screens/GlaubenssaetzeScreen";
 import GlaubenssatzDetailsScreen from "./screens/GlaubenssaetzeScreen/GlaubenssatzDetailsScreen";
 import GlaubenssatzPruefenScreen from "./screens/GlaubenssatzPruefenScreen";
+import UmkehrungPruefenScreen, {
+  UmkehrungPruefenScreenParams,
+} from "./screens/GlaubenssatzPruefenScreen/UmkehrungPruefenScreen";
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigator() {
@@ -18,7 +21,21 @@ export default function AppNavigator() {
           name="Glaubenssatz prüfen"
           component={GlaubenssatzPruefenScreen}
         />
+        <Stack.Screen
+          name={"UmkehrungPruefen"}
+          // @ts-ignore
+          component={UmkehrungPruefenScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+export type RootStackParamList = {
+  UmkehrungPruefen: UmkehrungPruefenScreenParams;
+};
+
+export type UmkehrungPruefenScreenRouteProp = RouteProp<
+  RootStackParamList,
+  "UmkehrungPruefen"
+>;

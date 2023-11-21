@@ -15,6 +15,7 @@ import {
   getSelectedGs,
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import InversionsHelpPopover from "./InversionsHelpPopover";
+import { useNavigation } from "@react-navigation/native";
 
 const DeleteIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="trash-2-outline" />
@@ -28,6 +29,7 @@ export default function Inversions() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = React.useState("");
+  const navigation = useNavigation();
 
   if (gs == null) return <Text>Error: Kein Glaubenssatz ausgewählt</Text>;
 
@@ -38,6 +40,21 @@ export default function Inversions() {
     }
   };
 
+  const navigateToInversion = (inversion: string) => {
+    const examples = gs?.inversions[inversion];
+    const onAddExample = (example: string) => {
+      dispatch(
+        actions.addInversionExample({ gsId: gs.id, inversion, example }),
+      );
+    };
+    // @ts-ignore
+    navigation.navigate("UmkehrungPruefen", {
+      inversion,
+      examples,
+      onAddExample,
+    });
+  };
+
   return (
     <View style={styles.root}>
       <View style={styles.headerContainer}>
@@ -46,7 +63,12 @@ export default function Inversions() {
       </View>
       <View style={styles.inversionListContainer}>
         {Object.keys(gs?.inversions ?? []).map((inversion) => (
-          <Card key={inversion}>
+          <Card
+            key={inversion}
+            onPress={() => {
+              navigateToInversion(inversion);
+            }}
+          >
             <View style={styles.cardContainer}>
               <Text category={"h6"}>{inversion}</Text>
               <Button
