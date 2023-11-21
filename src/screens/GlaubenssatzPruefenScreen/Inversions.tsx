@@ -1,18 +1,35 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Button, Card, Input, Text } from "@ui-kitten/components";
+import {
+  Button,
+  Card,
+  Icon,
+  IconElement,
+  IconProps,
+  Input,
+  Text,
+} from "@ui-kitten/components";
 import { useDispatch, useSelector } from "react-redux";
 import {
   actions,
   getSelectedGs,
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import InversionsHelpPopover from "./InversionsHelpPopover";
+
+const DeleteIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="trash-2-outline" />
+);
+
+const PlusIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="plus-circle-outline" />
+);
 
 export default function Inversions() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = React.useState("");
 
-  if (gs == null) return null;
+  if (gs == null) return <Text>Error: Kein Glaubenssatz ausgewählt</Text>;
 
   const addInversion = () => {
     if (inputValue !== "") {
@@ -23,31 +40,64 @@ export default function Inversions() {
 
   return (
     <View style={styles.root}>
-      <Text category={"h5"}>Umkehrungen</Text>
-      {Object.keys(gs?.inversions ?? []).map((inversion) => (
-        <Card key={inversion}>
-          <Text category={"h6"}>{inversion}</Text>
-          <Button
-            onPress={() => {
-              dispatch(actions.removeInversion({ gsId: gs.id, inversion }));
-            }}
-          >
-            entfernen
-          </Button>
-        </Card>
-      ))}
-      <Input
-        value={inputValue}
-        onChangeText={setInputValue}
-        placeholder={"Umkehrung eingeben"}
-      ></Input>
-      <Button onPress={addInversion}>Neue Umkehrung hinzufügen</Button>
+      <View style={styles.headerContainer}>
+        <Text category={"h5"}>Umkehrungen</Text>
+        <InversionsHelpPopover />
+      </View>
+      <View style={styles.inversionListContainer}>
+        {Object.keys(gs?.inversions ?? []).map((inversion) => (
+          <Card key={inversion}>
+            <View style={styles.cardContainer}>
+              <Text category={"h6"}>{inversion}</Text>
+              <Button
+                status={"danger"}
+                onPress={() => {
+                  dispatch(actions.removeInversion({ gsId: gs.id, inversion }));
+                }}
+                accessoryLeft={DeleteIcon}
+              />
+            </View>
+          </Card>
+        ))}
+      </View>
+      <View style={styles.newInversionContainer}>
+        <Input
+          value={inputValue}
+          onChangeText={setInputValue}
+          placeholder={"Umkehrung hinzufügen..."}
+          style={styles.newInversionInput}
+        ></Input>
+        <Button onPress={addInversion} accessoryLeft={PlusIcon} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
-    padding: 20,
+    paddingBottom: 50,
+  },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  inversionListContainer: {
+    marginVertical: 20,
+  },
+  cardContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  newInversionContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  newInversionInput: {
+    flex: 1,
+    marginRight: 10,
   },
 });
