@@ -71,10 +71,18 @@ export const glaubenssaetzeSlice = createSlice({
         { id: string } & Partial<Omit<GlaubenssatzDataItem, "inversions">>
       >,
     ) => {
-      console.log("update GS", action.payload);
       const { payload } = action;
       state.entities[payload.id] = _.merge(state.entities[payload.id], payload);
       state.entities[payload.id].dateUpdated = new Date();
+    },
+    addInversion: (
+      state,
+      action: PayloadAction<{ id: string; inversion: string }>,
+    ) => {
+      const { payload } = action;
+      const gs = state.entities[payload.id];
+      gs.inversions[payload.inversion] = [];
+      gs.dateUpdated = new Date();
     },
   },
 });
