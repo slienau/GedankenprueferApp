@@ -17,7 +17,6 @@ export interface AppScreenLayoutProps {
   title?: string;
   topNavigationProps?: TopNavigationProps;
   children?: React.ReactNode;
-  containerStyle?: LayoutProps["style"];
 }
 
 const BackIcon = (props: IconProps): IconElement => (
@@ -44,7 +43,7 @@ const AppScreenLayout: React.FC<AppScreenLayoutProps> = (props) => {
         {...props.topNavigationProps}
       />
       <Divider />
-      <Layout style={props.containerStyle}>{props.children}</Layout>
+      <Layout style={styles.layout}>{props.children}</Layout>
     </SafeAreaView>
   );
 };
@@ -53,6 +52,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  layout: {
+    flex: 1,
   },
 });
 

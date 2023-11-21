@@ -8,6 +8,7 @@ import Question1 from "./Question1";
 import Question2 from "./Question2";
 import Question3 from "./Question3";
 import Question4 from "./Question4";
+import Inversions from "./Inversions";
 
 export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector(getSelectedGs);
@@ -15,8 +16,8 @@ export default function GlaubenssatzDetailsScreen() {
   if (gs == null) return null;
 
   return (
-    <AppScreenLayout title={"Glaubenssatz prüfen"} containerStyle={styles.root}>
-      <ScrollView>
+    <AppScreenLayout title={"Glaubenssatz prüfen"}>
+      <ScrollView style={styles.root}>
         <Text category={"h1"} style={styles.header}>
           {gs.title}
         </Text>
@@ -28,6 +29,8 @@ export default function GlaubenssatzDetailsScreen() {
         <Question3 />
 
         <Question4 />
+
+        {/*<Inversions />*/}
       </ScrollView>
     </AppScreenLayout>
   );
