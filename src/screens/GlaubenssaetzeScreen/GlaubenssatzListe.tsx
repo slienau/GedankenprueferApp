@@ -19,7 +19,7 @@ export default function GlaubenssatzListe() {
   const handleCardPress = useCallback((id: string) => {
     dispatch(actions.select({ id }));
     // @ts-ignore
-    navigation.navigate("Glaubenssatz");
+    navigation.navigate("Glaubenssatz Details");
   }, []);
 
   return (
