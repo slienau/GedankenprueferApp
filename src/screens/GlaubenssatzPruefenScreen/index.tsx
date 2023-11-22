@@ -17,11 +17,10 @@ export default function GlaubenssatzPruefenScreen() {
 
   return (
     <AppScreenLayout title={"Glaubenssatz prüfen"}>
-      <ScrollView style={styles.root}>
-        <Text category={"h1"} style={styles.header}>
-          {gs.title}
-        </Text>
-
+      <Text category={"h1"} style={styles.header}>
+        {gs.title}
+      </Text>
+      <ScrollView style={styles.body}>
         <Question1 />
 
         <Question2 />
@@ -37,11 +36,12 @@ export default function GlaubenssatzPruefenScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: {
-    padding: 20,
-  },
   header: {
     textAlign: "center",
-    marginBottom: 30,
+    padding: 20,
+    paddingBottom: 0,
+  },
+  body: {
+    padding: 20,
   },
 });
