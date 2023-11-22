@@ -1,4 +1,10 @@
-import React, { useCallback, forwardRef, useRef, useImperativeHandle } from "react";
+import React, {
+  useCallback,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { StyleSheet } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
@@ -44,10 +50,16 @@ const GlaubenssatzListe = forwardRef((props, ref) => {
   const data = React.useMemo(
     () =>
       Object.values(glaubenssaetze).sort(
-        (a, b) => new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
+        (a, b) =>
+          new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
       ),
     [glaubenssaetze],
   );
+
+  // scroll to top when data changes (e.g. when a new gs is added or edited)
+  useEffect(() => {
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+  }, [glaubenssaetze]);
 
   return (
     <List
