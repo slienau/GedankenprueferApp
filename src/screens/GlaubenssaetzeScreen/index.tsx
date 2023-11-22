@@ -6,10 +6,10 @@ import { useDispatch } from "react-redux";
 import { actions } from "./glaubenssaetzeSlice";
 import TextInputModal from "../../ui/modals/TextInputModal";
 
-
 export default function GlaubenssaetzeScreen() {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
+  const gsListeRef = React.useRef<any>(null);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -18,11 +18,12 @@ export default function GlaubenssaetzeScreen() {
   const handleAddGs = (neuerGs: string) => {
     dispatch(actions.addGs(neuerGs));
     toggleModal();
+    gsListeRef.current?.scrollToTop();
   };
 
   return (
     <AppScreenLayout title={"Glaubenssätze"}>
-      <GlaubenssatzListe />
+      <GlaubenssatzListe ref={gsListeRef} />
       <FloatingActionButton onPress={() => setModalVisible(true)} />
       <TextInputModal
         isVisible={modalVisible}
@@ -32,7 +33,6 @@ export default function GlaubenssaetzeScreen() {
         title={"Neuer Glaubenssatz"}
         placeholder={"Ich kann gar nichts"}
       />
-
     </AppScreenLayout>
   );
 }
