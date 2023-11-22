@@ -1,17 +1,8 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import {
-    Icon,
-    IconElement,
-    IconProps,
-    Layout,
-    Text,
-} from "@ui-kitten/components";
-import {Button, Popover} from "@ui-kitten/components";
+import {Button, Layout, Popover, Text,} from "@ui-kitten/components";
+import {HelpIcon} from "../../ui/Icons";
 
-const HelpIcon = (props: IconProps): IconElement => (
-    <Icon {...props} name="question-mark-circle-outline"/>
-);
 
 export default function InversionsHelpPopover() {
     const [visible, setVisible] = React.useState(false);

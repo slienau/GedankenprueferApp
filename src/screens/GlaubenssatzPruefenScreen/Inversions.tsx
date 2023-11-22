@@ -1,29 +1,11 @@
 import React from "react";
-import {View, StyleSheet} from "react-native";
-import {
-    Button,
-    Card,
-    Icon,
-    IconElement,
-    IconProps,
-    Input,
-    Text,
-} from "@ui-kitten/components";
+import {StyleSheet, View} from "react-native";
+import {Button, Card, Input, Text,} from "@ui-kitten/components";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    actions,
-    getSelectedGs,
-} from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import {actions, getSelectedGs,} from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import InversionsHelpPopover from "./InversionsHelpPopover";
 import {useNavigation} from "@react-navigation/native";
-
-const DeleteIcon = (props: IconProps): IconElement => (
-    <Icon {...props} name="trash-2-outline"/>
-);
-
-const PlusIcon = (props: IconProps): IconElement => (
-    <Icon {...props} name="plus-circle-outline"/>
-);
+import {DeleteIcon, PlusIcon} from "../../ui/Icons";
 
 export default function Inversions() {
     const gs = useSelector(getSelectedGs);
