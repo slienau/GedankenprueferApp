@@ -27,8 +27,10 @@ export default function Question4() {
 
   return (
     <View style={styles.root}>
-      <Text category={"h5"}>Wer wärst du ohne den Gedanken?</Text>
-      <Text category={"s2"}>Wer oder was bist du ohne den Gedanken?</Text>
+      <Text category={"h5"} style={styles.questionHeader}>
+        Wer wärst du ohne den Gedanken?
+      </Text>
+      <Text appearance={"hint"}>Wer oder was bist du ohne den Gedanken?</Text>
       <Input
         multiline={true}
         textStyle={styles.inputTextStyle}

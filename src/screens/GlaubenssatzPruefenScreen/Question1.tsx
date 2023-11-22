@@ -23,7 +23,9 @@ export default function Question1() {
 
   return (
     <View style={styles.root}>
-      <Text category={"h5"}>Ist das wahr?</Text>
+      <Text category={"h5"} style={styles.questionHeader}>
+        Ist das wahr?
+      </Text>
       <RadioGroup selectedIndex={selectedIndex} onChange={handleChange}>
         <Radio>Ja</Radio>
         <Radio>Nein</Radio>

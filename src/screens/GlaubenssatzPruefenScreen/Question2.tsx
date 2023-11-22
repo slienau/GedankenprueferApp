@@ -29,7 +29,7 @@ export default function Question2() {
 
   return (
     <View style={styles.root}>
-      <Text category={"h5"}>
+      <Text category={"h5"} style={styles.questionHeader}>
         Kannst du mit absoluter Sicherheit wissen, dass das wahr ist?
       </Text>
       <RadioGroup selectedIndex={selectedIndex} onChange={handleChange}>

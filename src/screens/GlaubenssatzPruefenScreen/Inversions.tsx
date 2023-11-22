@@ -89,7 +89,7 @@ export default function Inversions() {
 
 const styles = StyleSheet.create({
   root: {
-    paddingBottom: 50,
+    // paddingBottom: 50,
   },
   headerContainer: {
     flexDirection: "row",

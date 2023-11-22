@@ -27,17 +27,17 @@ export default function Question3() {
 
   return (
     <View style={styles.root}>
-      <Text category={"h5"}>
+      <Text category={"h5"} style={styles.questionHeader}>
         Wie reagierst du, was passiert, wenn du diesen Gedanken glaubst?
       </Text>
-      <Text category={"s2"}>
+      <Text appearance={"hint"}>
         Welche Gefühle tauchen auf, wenn du diesen Gedanken glaubst?
       </Text>
-      <Text category={"s2"}>
+      <Text appearance={"hint"}>
         Welche Bilder aus der Vergangenheit und der Zukunft siehst du, wenn du
         diesen Gedanken glaubst?
       </Text>
-      <Text category={"s2"}>
+      <Text appearance={"hint"}>
         Wie behandelst du dich und andere Menschen, wenn du diesen Gedanken
         glaubst?
       </Text>
