@@ -64,7 +64,7 @@ export const glaubenssaetzeSlice = createSlice({
         inversions: {},
       };
     },
-    removeGs: (state, action: PayloadAction<{ id: string }>) => {
+    deleteGs: (state, action: PayloadAction<{ id: string }>) => {
       delete state.entities[action.payload.id];
     },
     selectGs: (state, action: PayloadAction<{ id: string }>) => {
