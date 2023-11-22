@@ -1,11 +1,15 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import {
   Divider,
   Icon,
   IconElement,
   IconProps,
   Layout,
-  LayoutProps,
   TopNavigation,
   TopNavigationAction,
   TopNavigationProps,
@@ -35,21 +39,29 @@ const BackAction = () => {
 
 const AppScreenLayout: React.FC<AppScreenLayoutProps> = (props) => {
   return (
-    <SafeAreaView style={styles.root}>
-      <TopNavigation
-        title={props.title}
-        alignment={"center"}
-        accessoryLeft={BackAction}
-        {...props.topNavigationProps}
-      />
-      <Divider />
-      <Layout style={styles.layout}>{props.children}</Layout>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.root}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <TopNavigation
+          title={props.title}
+          alignment={"center"}
+          accessoryLeft={BackAction}
+          {...props.topNavigationProps}
+        />
+        <Divider />
+        <Layout style={styles.layout}>{props.children}</Layout>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
+  },
+  safeArea: {
     flex: 1,
     backgroundColor: "#fff",
   },
