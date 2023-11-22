@@ -15,6 +15,7 @@ export type GlaubenssatzDataItem = {
   q4_whoWouldYouBeWithoutTheThought?: string;
   dateCreated: Date;
   dateUpdated: Date;
+  isOwnGs: boolean;
   inversions: Record<string, Array<string>>; // key: inversion; value: array of examples
 };
 
@@ -33,6 +34,7 @@ const initialState: GlaubenssaetzeState = {
         title: gs,
         dateCreated: new Date(),
         dateUpdated: new Date(),
+        isOwnGs: false,
         inversions: {},
       };
       return acc;
@@ -47,21 +49,22 @@ export const glaubenssaetzeSlice = createSlice({
   name: "glaubenssaetze",
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<string>) => {
+    addGs: (state, action: PayloadAction<string>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       const id = Crypto.randomUUID();
       state.entities[id] = {
-        id: Crypto.randomUUID(),
+        id,
         title: action.payload,
         dateCreated: new Date(),
         dateUpdated: new Date(),
+        isOwnGs: true,
         inversions: {},
       };
     },
-    remove: (state, action: PayloadAction<{ id: string }>) => {
+    removeGs: (state, action: PayloadAction<{ id: string }>) => {
       delete state.entities[action.payload.id];
     },
     selectGs: (state, action: PayloadAction<{ id: string }>) => {
