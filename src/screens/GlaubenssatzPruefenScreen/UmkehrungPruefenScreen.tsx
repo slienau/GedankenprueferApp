@@ -16,6 +16,7 @@ import {
   getSelectedInversion,
   getSelectedInversionExamples,
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import ScreenHeader from "../../ui/ScreenHeader";
 
 const PlusIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="plus-circle-outline" />
@@ -49,9 +50,8 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
 
   return (
     <AppScreenLayout title={"Umkehrung prüfen"}>
-      <Text category={"h1"} style={styles.header}>
-        {inversion}
-      </Text>
+      <ScreenHeader title={inversion} />
+
       <ScrollView style={styles.body}>
         <Text category={"s1"}>
           Finde mindestens drei Beispiele, wie diese Aussage wahr ist.
@@ -64,16 +64,17 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
               </Text>
             </Card>
           ))}
-          <View>
-            <Input
-              ref={inputRef}
-              placeholder={"Beispiel hinzufügen"}
-              value={inputValue}
-              onChangeText={setInputValue}
-              onSubmitEditing={addExample}
-            />
-            <Button onPress={addExample} accessoryLeft={PlusIcon} />
-          </View>
+        </View>
+        <View>
+          <Input
+            ref={inputRef}
+            placeholder={"Beispiel hinzufügen"}
+            value={inputValue}
+            onChangeText={setInputValue}
+            onSubmitEditing={addExample}
+            style={styles.input}
+          />
+          <Button onPress={addExample} accessoryLeft={PlusIcon} />
         </View>
       </ScrollView>
     </AppScreenLayout>
@@ -87,8 +88,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   body: {
-    padding: 20,
-    // paddingTop: 0,
+    paddingHorizontal: 20,
   },
   examplesContainer: {
     // marginTop: 20,
@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
   },
   exampleCard: {
     marginVertical: 10,
+  },
+  input: {
+    paddingVertical: 20,
   },
 });
 

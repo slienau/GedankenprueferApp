@@ -6,6 +6,7 @@ import AppNavigator from "./AppNavigator";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
+import { StatusBar } from "expo-status-bar";
 
 export default () => (
   <Provider store={store}>
@@ -13,6 +14,7 @@ export default () => (
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
         <AppNavigator />
+        <StatusBar style="auto" />
       </ApplicationProvider>
     </PersistGate>
   </Provider>

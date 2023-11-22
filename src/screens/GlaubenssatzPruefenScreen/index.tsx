@@ -1,7 +1,7 @@
 import React from "react";
 import AppScreenLayout from "../AppScreenLayout";
 import { useSelector } from "react-redux";
-import { Button, Divider, Text } from "@ui-kitten/components";
+import { Button } from "@ui-kitten/components";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { getSelectedGs } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import Question1 from "./Question1";
@@ -9,6 +9,8 @@ import Question2 from "./Question2";
 import Question3 from "./Question3";
 import Question4 from "./Question4";
 import Inversions from "./Inversions";
+import ScreenHeader from "../../ui/ScreenHeader";
+import Divider from "../../ui/Divider";
 
 export default function GlaubenssatzPruefenScreen() {
   const gs = useSelector(getSelectedGs);
@@ -34,10 +36,8 @@ export default function GlaubenssatzPruefenScreen() {
 
   return (
     <AppScreenLayout title={"Glaubenssatz prüfen"}>
-      <Text category={"h1"} style={styles.header}>
-        {gs.title}
-      </Text>
-      <Divider style={styles.divider} />
+      <ScreenHeader title={gs.title} />
+
       <ScrollView style={styles.body}>
         {step === 1 && <Question1 />}
 
@@ -49,7 +49,7 @@ export default function GlaubenssatzPruefenScreen() {
 
         {step === 5 && <Inversions />}
 
-        <Divider style={styles.divider} />
+        <Divider />
 
         <View style={styles.buttonContainer}>
           <Button onPress={previousStep} disabled={step === 1}>

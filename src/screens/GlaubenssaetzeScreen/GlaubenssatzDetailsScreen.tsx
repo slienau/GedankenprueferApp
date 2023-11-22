@@ -1,10 +1,11 @@
 import React from "react";
 import AppScreenLayout from "../AppScreenLayout";
 import { useSelector } from "react-redux";
-import { Button, Text } from "@ui-kitten/components";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Button } from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
 import { getSelectedGs } from "./glaubenssaetzeSlice";
 import { useNavigation } from "@react-navigation/native";
+import ScreenHeader from "../../ui/ScreenHeader";
 
 export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector(getSelectedGs);
@@ -14,9 +15,7 @@ export default function GlaubenssatzDetailsScreen() {
 
   return (
     <AppScreenLayout title={"Glaubenssatz"}>
-      <Text category={"h1"} style={styles.header}>
-        {gs.title}
-      </Text>
+      <ScreenHeader title={gs.title} />
       <View style={styles.body}>
         <Button
           onPress={() => {
@@ -32,12 +31,7 @@ export default function GlaubenssatzDetailsScreen() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    textAlign: "center",
-    padding: 20,
-    paddingBottom: 0,
-  },
   body: {
-    padding: 20,
+    paddingHorizontal: 20,
   },
 });
