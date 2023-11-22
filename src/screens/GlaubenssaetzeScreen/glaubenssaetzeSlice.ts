@@ -13,8 +13,8 @@ export type GlaubenssatzDataItem = {
   q2_isThatAbsolutelyTrue?: boolean;
   q3_whatHappensIfYouBelieveTheThought?: string;
   q4_whoWouldYouBeWithoutTheThought?: string;
-  dateCreated: Date;
-  dateUpdated: Date;
+  dateCreated: string;
+  dateUpdated: string;
   isOwnGs: boolean;
   inversions: Record<string, Array<string>>; // key: inversion; value: array of examples
 };
@@ -32,8 +32,8 @@ const initialState: GlaubenssaetzeState = {
       acc[id] = {
         id,
         title: gs,
-        dateCreated: new Date(),
-        dateUpdated: new Date(),
+        dateCreated: new Date().toISOString(),
+        dateUpdated: new Date().toISOString(),
         isOwnGs: false,
         inversions: {},
       };
@@ -58,8 +58,8 @@ export const glaubenssaetzeSlice = createSlice({
       state.entities[id] = {
         id,
         title: action.payload,
-        dateCreated: new Date(),
-        dateUpdated: new Date(),
+        dateCreated: new Date().toISOString(),
+        dateUpdated: new Date().toISOString(),
         isOwnGs: true,
         inversions: {},
       };
@@ -81,7 +81,7 @@ export const glaubenssaetzeSlice = createSlice({
     ) => {
       const { payload } = action;
       state.entities[payload.id] = _.merge(state.entities[payload.id], payload);
-      state.entities[payload.id].dateUpdated = new Date();
+      state.entities[payload.id].dateUpdated = new Date().toISOString();
     },
     addInversion: (
       state,
@@ -90,7 +90,7 @@ export const glaubenssaetzeSlice = createSlice({
       const { payload } = action;
       const gs = state.entities[payload.id];
       gs.inversions[payload.inversion] = [];
-      gs.dateUpdated = new Date();
+      gs.dateUpdated = new Date().toISOString();
     },
     removeInversion: (
       state,
@@ -110,7 +110,7 @@ export const glaubenssaetzeSlice = createSlice({
       const { payload } = action;
       const gs = state.entities[state.selectedGsId];
       gs.inversions[state.selectedInversion].push(payload.example);
-      gs.dateUpdated = new Date();
+      gs.dateUpdated = new Date().toISOString();
     },
   },
 });

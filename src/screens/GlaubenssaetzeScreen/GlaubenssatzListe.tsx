@@ -33,9 +33,17 @@ export default function GlaubenssatzListe() {
     navigation.navigate("Glaubenssatz Details");
   }, []);
 
+  const data = React.useMemo(
+    () =>
+      Object.values(glaubenssaetze).sort(
+        (a, b) => new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
+      ),
+    [glaubenssaetze],
+  );
+
   return (
     <List
-      data={Object.values(glaubenssaetze)}
+      data={data}
       renderItem={({ item }) => (
         <ListItem item={item} onPress={() => handleCardPress(item.id)} />
       )}
