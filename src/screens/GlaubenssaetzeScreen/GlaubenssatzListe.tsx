@@ -4,10 +4,21 @@ import { Card, List, Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
-import { actions } from "./glaubenssaetzeSlice";
+import { GlaubenssatzDataItem, actions } from "./glaubenssaetzeSlice";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+
+type ListItemProps = {
+  item: GlaubenssatzDataItem;
+  onPress: () => void;
+};
+
+const ListItem = React.memo(({ item, onPress }: ListItemProps) => (
+  <Card style={styles.card} onPress={onPress}>
+    <Text category={"h4"}>{item.title}</Text>
+  </Card>
+));
 
 export default function GlaubenssatzListe() {
   const glaubenssaetze = useSelector(
@@ -26,9 +37,7 @@ export default function GlaubenssatzListe() {
     <List
       data={Object.values(glaubenssaetze)}
       renderItem={({ item }) => (
-        <Card style={styles.card} onPress={() => handleCardPress(item.id)}>
-          <Text category={"h4"}>{item.title}</Text>
-        </Card>
+        <ListItem item={item} onPress={() => handleCardPress(item.id)} />
       )}
       keyExtractor={(item) => item.id}
     />
