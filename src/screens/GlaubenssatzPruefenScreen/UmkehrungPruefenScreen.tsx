@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Button, Card, Input, Text } from "@ui-kitten/components";
+import { Card, Input, Text } from "@ui-kitten/components";
 import AppScreenLayout from "../AppScreenLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,6 +21,10 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
   if (inversion == null || examples == null) return null;
 
   const [inputValue, setInputValue] = React.useState("");
+
+  React.useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const addExample = () => {
     if (inputValue !== "") {
@@ -49,22 +53,27 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
           {examples.map((example, index) => (
             <Card key={`${inversion}-${example}`} style={styles.exampleCard}>
               <Text>
-                {index}) {example}
+                {index + 1}) {example}
               </Text>
             </Card>
           ))}
+          <Card>
+            <View style={styles.inputCard}>
+              <Text>{examples.length + 1}) </Text>
+              <Input
+                ref={inputRef}
+                placeholder={"Beispiel hinzufügen"}
+                value={inputValue}
+                onChangeText={setInputValue}
+                onSubmitEditing={addExample}
+                style={styles.input}
+              />
+            </View>
+          </Card>
         </View>
-        <View>
-          <Input
-            ref={inputRef}
-            placeholder={"Beispiel hinzufügen"}
-            value={inputValue}
-            onChangeText={setInputValue}
-            onSubmitEditing={addExample}
-            style={styles.input}
-          />
-          <Button onPress={addExample} accessoryLeft={PlusIcon} />
-        </View>
+        {/*<View>*/}
+        {/*  <Button onPress={addExample} accessoryLeft={PlusIcon} />*/}
+        {/*</View>*/}
       </ScrollView>
     </AppScreenLayout>
   );
@@ -87,8 +96,13 @@ const styles = StyleSheet.create({
   exampleCard: {
     marginVertical: 10,
   },
+  inputCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
   input: {
-    paddingVertical: 20,
+    flex: 1,
   },
 });
 
