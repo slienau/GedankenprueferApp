@@ -92,6 +92,20 @@ export const glaubenssaetzeSlice = createSlice({
       gs.inversions[payload.inversion] = [];
       gs.dateUpdated = new Date().toISOString();
     },
+    editInversion: (
+      state,
+      action: PayloadAction<{
+        gsId: string;
+        inversion: string;
+        newInversion: string;
+      }>,
+    ) => {
+      const { gsId, inversion, newInversion } = action.payload;
+      const gs = state.entities[gsId];
+      // assign new key and delete old key
+      gs.inversions[newInversion] = gs.inversions[inversion];
+      delete gs.inversions[inversion];
+    },
     removeInversion: (
       state,
       action: PayloadAction<{ gsId: string; inversion: string }>,

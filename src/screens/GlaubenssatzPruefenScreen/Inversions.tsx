@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { PlusIcon } from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
 import EditButtons from "../../ui/EditButtons";
+import TextInputModal from "../../ui/modals/TextInputModal";
 
 export default function Inversions() {
   const gs = useSelector(getSelectedGs);
@@ -19,6 +20,9 @@ export default function Inversions() {
   const [inversionToDelete, setInversionToDelete] = React.useState<
     string | null
   >(null);
+  const [inversionToEdit, setInversionToEdit] = React.useState<string | null>(
+    null,
+  );
   const navigation = useNavigation();
 
   if (gs == null) return <Text>Error: Kein Glaubenssatz ausgewählt</Text>;
@@ -36,6 +40,19 @@ export default function Inversions() {
         actions.removeInversion({ gsId: gs.id, inversion: inversionToDelete }),
       );
       setInversionToDelete(null);
+    }
+  };
+
+  const editInversion = (newInversion: string) => {
+    if (inversionToEdit != null) {
+      dispatch(
+        actions.editInversion({
+          gsId: gs.id,
+          inversion: inversionToEdit,
+          newInversion,
+        }),
+      );
+      setInversionToEdit(null);
     }
   };
 
@@ -64,11 +81,15 @@ export default function Inversions() {
               <Text category={"s1"} style={styles.inversionText}>
                 {inversion}
               </Text>
-              <EditButtons onDelete={() => setInversionToDelete(inversion)} />
+              <EditButtons
+                onDelete={() => setInversionToDelete(inversion)}
+                onEdit={() => setInversionToEdit(inversion)}
+              />
             </View>
           </Card>
         ))}
       </View>
+
       <View style={styles.newInversionContainer}>
         <Input
           value={inputValue}
@@ -84,6 +105,7 @@ export default function Inversions() {
           disabled={inputValue === ""}
         />
       </View>
+
       <DeleteConfirmModal
         title={"Umkehrung löschen?"}
         onConfirm={deleteInversion}
@@ -98,6 +120,16 @@ export default function Inversions() {
           löschen?
         </Text>
       </DeleteConfirmModal>
+
+      <TextInputModal
+        title={"Umkehrung umbenennen"}
+        placeholder={inversionToEdit ?? ""}
+        isVisible={inversionToEdit != null}
+        onCancel={() => {
+          setInversionToEdit(null);
+        }}
+        onConfirm={editInversion}
+      ></TextInputModal>
     </View>
   );
 }
