@@ -8,8 +8,9 @@ import {
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import InversionsHelpPopover from "./InversionsHelpPopover";
 import { useNavigation } from "@react-navigation/native";
-import { DeleteIcon, PlusIcon } from "../../ui/Icons";
+import { PlusIcon } from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
+import EditButtons from "../../ui/EditButtons";
 
 export default function Inversions() {
   const gs = useSelector(getSelectedGs);
@@ -63,12 +64,7 @@ export default function Inversions() {
               <Text category={"s1"} style={styles.inversionText}>
                 {inversion}
               </Text>
-              <Button
-                status={"danger"}
-                onPress={() => setInversionToDelete(inversion)}
-                accessoryLeft={DeleteIcon}
-                appearance={"ghost"}
-              />
+              <EditButtons onDelete={() => setInversionToDelete(inversion)} />
             </View>
           </Card>
         ))}

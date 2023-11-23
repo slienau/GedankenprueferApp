@@ -16,3 +16,15 @@ export const HelpIcon = (props: IconProps): IconElement => (
 export const EditIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="edit-outline" />
 );
+
+export const CloseIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="close-outline" />
+);
+
+export const MoreVerticalIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="more-vertical-outline" />
+);
+
+export const MoreHorizontalIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="more-horizontal-outline" />
+);
