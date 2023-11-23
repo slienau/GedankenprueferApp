@@ -28,3 +28,11 @@ export const MoreVerticalIcon = (props: IconProps): IconElement => (
 export const MoreHorizontalIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="more-horizontal-outline" />
 );
+
+export const NextIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="arrow-forward-outline" />
+);
+
+export const PreviousIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="arrow-back-outline" />
+);

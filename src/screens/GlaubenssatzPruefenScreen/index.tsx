@@ -11,6 +11,7 @@ import Question4 from "./Question4";
 import Inversions from "./Inversions";
 import ScreenHeader from "../../ui/ScreenHeader";
 import Divider from "../../ui/Divider";
+import { NextIcon, PreviousIcon } from "../../ui/Icons";
 
 export default function GlaubenssatzPruefenScreen() {
   const gs = useSelector(getSelectedGs);
@@ -52,11 +53,20 @@ export default function GlaubenssatzPruefenScreen() {
         <Divider />
 
         <View style={styles.buttonContainer}>
-          <Button onPress={previousStep} disabled={step === 1}>
-            Zurück
+          <Button
+            onPress={previousStep}
+            disabled={step === 1}
+            accessoryLeft={PreviousIcon}
+          >
+            zurück
           </Button>
-          <Button onPress={nextStep} disabled={step === 5}>
-            Weiter
+
+          <Button
+            onPress={nextStep}
+            disabled={step === 5}
+            accessoryRight={NextIcon}
+          >
+            weiter
           </Button>
         </View>
       </ScrollView>
