@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   button: {
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
   },
   buttonBasic: { backgroundColor: "transparent", borderColor: "#000" },
   disabled: {
@@ -15,5 +15,5 @@ export default StyleSheet.create({
   textDisabled: {
     // color: theme["color-grey-600"]
   },
-  wide: { minWidth: 217 }
+  wide: { minWidth: 217 },
 });

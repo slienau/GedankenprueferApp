@@ -12,7 +12,7 @@ export const ButtonBasic: React.FC<ButtonProps> = (props) => {
         styles.buttonBasic,
         props.wide && styles.wide,
         props.disabled && styles.disabled,
-        props.style
+        props.style,
       ]}
       appearance="outline"
       status="basic"

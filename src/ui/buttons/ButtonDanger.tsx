@@ -11,7 +11,7 @@ export const ButtonDanger: React.FC<ButtonProps> = (props) => {
         styles.button,
         props.wide && styles.wide,
         props.disabled && styles.disabled,
-        props.style
+        props.style,
       ]}
       status="danger"
       disabled={props.disabled}

@@ -7,20 +7,20 @@ export default StyleSheet.create({
     width: "90%",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   input: {
     width: "100%",
     minWidth: 200,
-    marginBottom: 30
+    marginBottom: 30,
   },
   buttonContainer: {
     width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
     // marginTop: 10
-  }
+  },
 });

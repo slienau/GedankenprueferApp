@@ -11,7 +11,7 @@ export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
         styles.button,
         props.wide && styles.wide,
         props.disabled && styles.disabled,
-        props.style
+        props.style,
       ]}
       disabled={props.disabled}
       // @ts-ignore

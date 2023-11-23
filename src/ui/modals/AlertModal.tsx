@@ -5,7 +5,7 @@ import {
   ButtonBasic,
   ButtonDanger,
   ButtonPrimary,
-  ButtonProps
+  ButtonProps,
 } from "../buttons";
 import BackdropModal from "./BackdropModal";
 
@@ -44,7 +44,7 @@ const AlertModal: React.FC<AlertModalProps> = (props) => {
           <View
             style={[
               styles.buttonContainer,
-              buttons.length === 1 && { justifyContent: "center" }
+              buttons.length === 1 && { justifyContent: "center" },
             ]}
           >
             {buttons?.map((button, i) => {

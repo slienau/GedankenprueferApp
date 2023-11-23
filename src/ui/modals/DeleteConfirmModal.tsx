@@ -12,7 +12,7 @@ interface DeleteConfirmModalProps {
 const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = (props) => {
   const buttons: AlertModalProps["buttons"] = [
     { type: "basic", onPress: props.onCancel, label: "Abbrechen" },
-    { type: "danger", onPress: props.onConfirm, label: "Löschen" }
+    { type: "danger", onPress: props.onConfirm, label: "Löschen" },
   ];
 
   return (

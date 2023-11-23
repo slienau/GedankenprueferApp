@@ -2,7 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Input, Text } from "@ui-kitten/components";
 import { useDispatch, useSelector } from "react-redux";
-import { actions, getSelectedGs } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import {
+  actions,
+  getSelectedGs,
+} from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import InversionsHelpPopover from "./InversionsHelpPopover";
 import { useNavigation } from "@react-navigation/native";
 import { DeleteIcon, PlusIcon } from "../../ui/Icons";
@@ -12,7 +15,9 @@ export default function Inversions() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = React.useState("");
-  const [inversionToDelete, setInversionToDelete] = React.useState<string | null>(null);
+  const [inversionToDelete, setInversionToDelete] = React.useState<
+    string | null
+  >(null);
   const navigation = useNavigation();
 
   if (gs == null) return <Text>Error: Kein Glaubenssatz ausgewählt</Text>;
@@ -26,7 +31,9 @@ export default function Inversions() {
 
   const deleteInversion = () => {
     if (inversionToDelete != null) {
-      dispatch(actions.removeInversion({ gsId: gs.id, inversion: inversionToDelete }));
+      dispatch(
+        actions.removeInversion({ gsId: gs.id, inversion: inversionToDelete }),
+      );
       setInversionToDelete(null);
     }
   };
@@ -98,24 +105,24 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
     // marginBottom: 20,
   },
   inversionListContainer: {
-    marginVertical: 20
+    marginVertical: 20,
   },
   cardContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   newInversionContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   newInversionInput: {
     flex: 1,
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });
