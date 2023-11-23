@@ -25,7 +25,7 @@ export default function Inversions() {
   const addInversion = () => {
     if (inputValue !== "") {
       dispatch(actions.addInversion({ id: gs.id, inversion: inputValue }));
-      setInputValue("");
+      setTimeout(() => setInputValue(""), 10);
     }
   };
 
@@ -54,12 +54,15 @@ export default function Inversions() {
         {Object.keys(gs?.inversions ?? []).map((inversion) => (
           <Card
             key={inversion}
+            style={styles.card}
             onPress={() => {
               navigateToUmkehrungPruefen(inversion);
             }}
           >
-            <View style={styles.cardContainer}>
-              <Text category={"s1"}>{inversion}</Text>
+            <View style={styles.cardBody}>
+              <Text category={"s1"} style={styles.inversionText}>
+                {inversion}
+              </Text>
               <Button
                 status={"danger"}
                 onPress={() => setInversionToDelete(inversion)}
@@ -87,13 +90,18 @@ export default function Inversions() {
       </View>
       <DeleteConfirmModal
         title={"Umkehrung löschen?"}
-        text={`Möchtest du die Umkehrung "${inversionToDelete}" löschen?`}
         onConfirm={deleteInversion}
         onCancel={() => {
           setInversionToDelete(null);
         }}
         isVisible={inversionToDelete != null}
-      />
+      >
+        <Text>
+          Möchtest du die Umkehrung "
+          <Text style={{ fontWeight: "bold" }}>{inversionToDelete ?? ""}</Text>"
+          löschen?
+        </Text>
+      </DeleteConfirmModal>
     </View>
   );
 }
@@ -109,9 +117,15 @@ const styles = StyleSheet.create({
     // marginBottom: 20,
   },
   inversionListContainer: {
-    marginVertical: 20,
+    marginVertical: 10,
   },
-  cardContainer: {
+  inversionText: {
+    flex: 1,
+  },
+  card: {
+    marginBottom: 15,
+  },
+  cardBody: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

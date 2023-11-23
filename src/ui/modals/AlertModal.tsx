@@ -20,6 +20,7 @@ export interface AlertModalProps {
   text?: string;
   isVisible: boolean;
   buttons?: Array<AlertModalButton>;
+  children?: React.ReactNode;
 }
 
 const AlertModal: React.FC<AlertModalProps> = (props) => {
@@ -36,7 +37,8 @@ const AlertModal: React.FC<AlertModalProps> = (props) => {
 
         <View style={styles.bodyContainer}>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{props.text ?? ""}</Text>
+            {props.text && <Text style={styles.text}>{props.text}</Text>}
+            {props.children}
           </View>
         </View>
 

@@ -13,3 +13,7 @@ export const DeleteIcon = (props: IconProps): IconElement => (
 export const HelpIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="question-mark-circle-outline" />
 );
+
+export const EditIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="edit-outline" />
+);

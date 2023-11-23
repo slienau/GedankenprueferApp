@@ -36,9 +36,9 @@ export default function GlaubenssatzPruefenScreen() {
 
   return (
     <AppScreenLayout title={"Glaubenssatz prüfen"}>
-      <ScreenHeader title={gs.title} />
-
       <ScrollView style={styles.body}>
+        <ScreenHeader title={gs.title} />
+
         {step === 1 && <Question1 />}
 
         {step === 2 && <Question2 />}

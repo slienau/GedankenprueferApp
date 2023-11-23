@@ -7,14 +7,15 @@ export default StyleSheet.create({
   titleContainer: {
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 20,
   },
   bodyContainer: {
     justifyContent: "center",
     alignItems: "center",
   },
   textContainer: {
-    width: "70%",
-    minWidth: 200,
+    // width: "70%",
+    // minWidth: 200,
   },
   text: { textAlign: "center" },
   buttonContainer: {

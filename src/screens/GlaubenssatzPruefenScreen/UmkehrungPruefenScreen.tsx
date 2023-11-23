@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Card, Input, Text } from "@ui-kitten/components";
+import { Button, Card, Input, Text } from "@ui-kitten/components";
 import AppScreenLayout from "../AppScreenLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,7 +9,7 @@ import {
   getSelectedInversionExamples,
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import ScreenHeader from "../../ui/ScreenHeader";
-import { PlusIcon } from "../../ui/Icons";
+import { EditIcon } from "../../ui/Icons";
 
 const UmkehrungPruefenScreen: React.FC<{}> = function () {
   const dispatch = useDispatch();
@@ -43,18 +43,30 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
 
   return (
     <AppScreenLayout title={"Umkehrung prüfen"}>
-      <ScreenHeader title={inversion} />
-
       <ScrollView style={styles.body}>
+        <ScreenHeader title={inversion} />
         <Text category={"s1"}>
           Finde mindestens drei Beispiele, wie diese Aussage wahr ist.
         </Text>
         <View style={styles.examplesContainer}>
           {examples.map((example, index) => (
             <Card key={`${inversion}-${example}`} style={styles.exampleCard}>
-              <Text>
-                {index + 1}) {example}
-              </Text>
+              <View style={styles.exampleCardBody}>
+                <Text style={styles.exampleText}>
+                  {index + 1}) {example}
+                </Text>
+                <Button
+                  onPress={() => {
+                    // dispatch(
+                    //   actions.removeInversionExample({
+                    //     example,
+                    //   }),
+                    // );
+                  }}
+                  appearance={"ghost"}
+                  accessoryLeft={EditIcon}
+                />
+              </View>
             </Card>
           ))}
           <Card>
@@ -89,12 +101,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   examplesContainer: {
-    // marginTop: 20,
+    marginTop: 20,
     // flexDirection: "row",
     // flexWrap: "wrap",
   },
   exampleCard: {
     marginVertical: 10,
+  },
+  exampleCardBody: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  exampleText: {
+    flex: 1,
   },
   inputCard: {
     flexDirection: "row",

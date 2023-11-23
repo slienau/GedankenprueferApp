@@ -3,10 +3,11 @@ import AlertModal, { AlertModalProps } from "./AlertModal";
 
 interface DeleteConfirmModalProps {
   title: string;
-  text: string;
+  text?: string;
   onConfirm: () => void;
   onCancel: () => void;
   isVisible: boolean;
+  children?: React.ReactNode;
 }
 
 const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = (props) => {
@@ -21,7 +22,9 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = (props) => {
       text={props.text}
       isVisible={props.isVisible}
       buttons={buttons}
-    />
+    >
+      {props.children}
+    </AlertModal>
   );
 };
 
