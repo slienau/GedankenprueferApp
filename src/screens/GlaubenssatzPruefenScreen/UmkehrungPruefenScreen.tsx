@@ -16,7 +16,7 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
 
   const examples = useSelector(getSelectedInversionExamples);
   const inversion = useSelector(getSelectedInversion);
-  const inputRef = React.useRef<Input>(null);
+  const inputRef = React.useRef<Input | null>(null);
 
   if (inversion == null || examples == null) return null;
 

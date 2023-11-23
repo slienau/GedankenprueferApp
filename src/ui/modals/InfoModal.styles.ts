@@ -16,4 +16,5 @@ export default StyleSheet.create({
   body: {
     marginTop: 25,
   },
+  closeButton: { position: "absolute", top: 0, right: 0 },
 });

@@ -25,7 +25,7 @@ const InfoModal: React.FC<HelpScreenModalProps> = (props) => {
             width={40}
             height={40}
             onPress={props.onClosePress}
-            style={{ position: "absolute", top: 0, right: 0 }}
+            style={styles.closeButton}
           />
           <View style={styles.body}>{props.children}</View>
         </View>
