@@ -6,7 +6,14 @@ export default StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    backgroundColor: "#44423E",
   },
-  view: { alignItems: "flex-end", paddingHorizontal: 10 },
+  view: {
+    marginHorizontal: 10,
+    marginVertical: 50,
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  body: {
+    marginTop: 25,
+  },
 });
