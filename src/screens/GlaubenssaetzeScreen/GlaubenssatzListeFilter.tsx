@@ -1,17 +1,10 @@
 import React from "react";
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
+import { GlaubenssatzListeFilterType } from "./GlaubenssatzListe.hooks";
 
 type GlaubenssatzListeFilterProps = {
-  filter: {
-    universelleGs: boolean;
-    einschraenkendeGs: boolean;
-    offenFuerZweifel: boolean;
-    museumAlterGs: boolean;
-    ohneStatus: boolean;
-  };
-  setFilter: (
-    newFilter: Partial<GlaubenssatzListeFilterProps["filter"]>,
-  ) => void;
+  filter: GlaubenssatzListeFilterType;
+  setFilter: (newFilter: Partial<GlaubenssatzListeFilterType>) => void;
 };
 
 const GlaubenssatzListeFilter: React.FC<GlaubenssatzListeFilterProps> = ({
@@ -24,14 +17,16 @@ const GlaubenssatzListeFilter: React.FC<GlaubenssatzListeFilterProps> = ({
   ]);
 
   const handleSelect = (index: IndexPath[]) => {
-    console.log("handleSelect", index);
     setSelectedIndex(index);
+
+    const selectedRows = index.map((i) => i.row);
+
     setFilter({
-      universelleGs: index.includes(new IndexPath(0)),
-      einschraenkendeGs: index.includes(new IndexPath(2)),
-      offenFuerZweifel: index.includes(new IndexPath(3)),
-      museumAlterGs: index.includes(new IndexPath(4)),
-      ohneStatus: index.includes(new IndexPath(5)),
+      universelleGs: selectedRows.includes(0),
+      einschraenkendeGs: selectedRows.includes(1),
+      offenFuerZweifel: selectedRows.includes(2),
+      museumAlterGs: selectedRows.includes(3),
+      ohneStatus: selectedRows.includes(4),
     });
   };
 

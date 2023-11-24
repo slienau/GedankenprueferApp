@@ -6,12 +6,20 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
+export type GlaubenssatzListeFilterType = {
+  universelleGs: boolean;
+  einschraenkendeGs: boolean;
+  offenFuerZweifel: boolean;
+  museumAlterGs: boolean;
+  ohneStatus: boolean;
+};
+
 export const useGlaubenssatzListeData = () => {
   const glaubenssaetze = useSelector(
     (state: RootState) => state.glaubenssaetze.entities,
   );
 
-  const [filter, setFilter] = React.useState({
+  const [filter, setFilter] = React.useState<GlaubenssatzListeFilterType>({
     universelleGs: true,
     einschraenkendeGs: true,
     offenFuerZweifel: true,
@@ -55,7 +63,8 @@ export const useGlaubenssatzListeData = () => {
     );
   }, [glaubenssaetze, filter]);
 
-  const handleSetFilter = (newFilter: Partial<typeof filter>) => {
+  const handleSetFilter = (newFilter: Partial<GlaubenssatzListeFilterType>) => {
+    console.debug("Glaubenssatz filter change", newFilter);
     setFilter((prev) => ({
       ...prev,
       ...newFilter,
