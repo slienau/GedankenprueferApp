@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import ScreenHeader from "../../ui/ScreenHeader";
 import { DeleteIcon } from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
+import GlaubenssatzStatusSelect from "./GlaubenssatzStatusSelect";
 
 export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector(getSelectedGs);
@@ -30,6 +31,7 @@ export default function GlaubenssatzDetailsScreen() {
     <AppScreenLayout title={"Glaubenssatz"}>
       <ScreenHeader title={gs.title} />
       <View style={styles.body}>
+        <GlaubenssatzStatusSelect />
         <Button
           style={styles.button}
           onPress={() => {

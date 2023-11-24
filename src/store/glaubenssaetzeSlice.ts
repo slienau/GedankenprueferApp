@@ -6,6 +6,14 @@ import _ from "lodash";
 import universelleGS from "../resources/universelle-glaubenssaetze";
 import { RootState } from "./index";
 
+export enum GlaubenssatzStatusType {
+  Leer = "   ",
+  Einschraenkend = "einschränkend",
+  OffenFuerZweifel = "offen für Zweifel",
+  MuseumAlterGS = "Museum alter GS",
+  HeiligerPlatz = "Heiliger Platz",
+}
+
 export type GlaubenssatzDataItem = {
   id: string;
   title: string;
@@ -16,6 +24,7 @@ export type GlaubenssatzDataItem = {
   dateCreated: string;
   dateUpdated: string;
   isOwnGs: boolean;
+  status: GlaubenssatzStatusType;
   inversions: Record<string, Array<string>>; // key: inversion; value: array of examples
 };
 
@@ -25,18 +34,27 @@ export interface GlaubenssaetzeState {
   selectedInversion: string | null;
 }
 
+const createNewGs = (
+  title: string,
+  isOwnGs: boolean = false,
+): GlaubenssatzDataItem => {
+  const id = Crypto.randomUUID();
+  return {
+    id,
+    title,
+    dateCreated: new Date().toISOString(),
+    dateUpdated: new Date().toISOString(),
+    isOwnGs,
+    status: GlaubenssatzStatusType.Leer,
+    inversions: {},
+  };
+};
+
 const initialState: GlaubenssaetzeState = {
   entities: universelleGS.reduce(
     (acc: Record<string, GlaubenssatzDataItem>, gs: string) => {
       const id = Crypto.randomUUID();
-      acc[id] = {
-        id,
-        title: gs,
-        dateCreated: new Date().toISOString(),
-        dateUpdated: new Date().toISOString(),
-        isOwnGs: false,
-        inversions: {},
-      };
+      acc[id] = createNewGs(gs);
       return acc;
     },
     {},
@@ -50,19 +68,8 @@ export const glaubenssaetzeSlice = createSlice({
   initialState,
   reducers: {
     addGs: (state, action: PayloadAction<string>) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      const id = Crypto.randomUUID();
-      state.entities[id] = {
-        id,
-        title: action.payload,
-        dateCreated: new Date().toISOString(),
-        dateUpdated: new Date().toISOString(),
-        isOwnGs: true,
-        inversions: {},
-      };
+      const newGs = createNewGs(action.payload, true);
+      state.entities[newGs.id] = newGs;
     },
     deleteGs: (state, action: PayloadAction<{ id: string }>) => {
       delete state.entities[action.payload.id];
