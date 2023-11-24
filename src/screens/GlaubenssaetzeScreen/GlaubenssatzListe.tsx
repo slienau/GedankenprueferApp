@@ -27,20 +27,16 @@ const ListItem = React.memo(({ item, onPress }: ListItemProps) => {
       status = "basic";
       break;
     // @ts-ignore
-    case "HeiligerPlatz":
-      status = "success";
-      break;
-    // @ts-ignore
-    case "MuseumAlterGS":
-      status = "success";
-      break;
-    // @ts-ignore
     case "Einschraenkend":
       status = "danger";
       break;
     // @ts-ignore
     case "OffenFuerZweifel":
       status = "warning";
+      break;
+    // @ts-ignore
+    case "MuseumAlterGS":
+      status = "success";
       break;
   }
   return (

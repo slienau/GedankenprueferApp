@@ -11,7 +11,6 @@ export enum GlaubenssatzStatusType {
   Einschraenkend = "einschränkend",
   OffenFuerZweifel = "offen für Zweifel",
   MuseumAlterGS = "Museum alter GS",
-  HeiligerPlatz = "Heiliger Platz",
 }
 
 export type GlaubenssatzDataItem = {
