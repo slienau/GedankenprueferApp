@@ -1,30 +1,54 @@
 import React, {
-  useCallback,
   forwardRef,
-  useRef,
-  useImperativeHandle,
+  useCallback,
   useEffect,
+  useImperativeHandle,
+  useRef,
 } from "react";
 import { StyleSheet } from "react-native";
 import { Card, List, Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { GlaubenssatzDataItem, actions } from "../../store/glaubenssaetzeSlice";
-
-import { useSelector } from "react-redux";
+import { actions, GlaubenssatzDataItem } from "../../store/glaubenssaetzeSlice";
 import { RootState } from "../../store";
+import { EvaStatus } from "@ui-kitten/components/devsupport";
 
 type ListItemProps = {
   item: GlaubenssatzDataItem;
   onPress: () => void;
 };
 
-const ListItem = React.memo(({ item, onPress }: ListItemProps) => (
-  <Card style={styles.card} onPress={onPress}>
-    <Text category={"h4"}>{item.title}</Text>
-  </Card>
-));
+const ListItem = React.memo(({ item, onPress }: ListItemProps) => {
+  let status: EvaStatus = "basic";
+  switch (item.status) {
+    // @ts-ignore
+    case "Leer":
+      status = "basic";
+      break;
+    // @ts-ignore
+    case "HeiligerPlatz":
+      status = "success";
+      break;
+    // @ts-ignore
+    case "MuseumAlterGS":
+      status = "success";
+      break;
+    // @ts-ignore
+    case "Einschraenkend":
+      status = "danger";
+      break;
+    // @ts-ignore
+    case "OffenFuerZweifel":
+      status = "warning";
+      break;
+  }
+  return (
+    <Card style={styles.card} onPress={onPress} status={status}>
+      <Text category={"h4"}>{item.title}</Text>
+    </Card>
+  );
+});
 
 const GlaubenssatzListe = forwardRef((props, ref) => {
   const glaubenssaetze = useSelector(
@@ -75,7 +99,8 @@ const GlaubenssatzListe = forwardRef((props, ref) => {
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 20,
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
 });
 
