@@ -88,6 +88,11 @@ const GlaubenssatzListe = forwardRef((props, ref) => {
         )}
         keyExtractor={(item) => item.id}
       />
+      {filteredData.length === 0 && (
+        <Text>
+          Keine Glaubenssätze entsprechend den Filterkriterien gefunden
+        </Text>
+      )}
     </View>
   );
 });
