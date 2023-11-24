@@ -15,24 +15,38 @@ const EditButtons: React.FC<EditButtonsProps> = (props) => {
     setIsButtonGroupVisible(!isButtonGroupVisible);
   };
 
+  const handleEdit = () => {
+    onEdit && onEdit();
+    toggleButtonGroupVisible();
+  };
+
+  const handleDelete = () => {
+    onDelete && onDelete();
+    toggleButtonGroupVisible();
+  };
+
   const renderButtons = () => {
     if (onEdit == null && onDelete == null) return null;
     if (onEdit != null && onDelete != null) {
       return (
         <ButtonGroup appearance={"outline"} size={"small"}>
-          <Button onPress={onEdit} accessoryLeft={EditIcon} />
-          <Button onPress={onDelete} accessoryLeft={DeleteIcon} />
+          <Button onPress={handleEdit} accessoryLeft={EditIcon} />
+          <Button onPress={handleDelete} accessoryLeft={DeleteIcon} />
         </ButtonGroup>
       );
     }
     if (onEdit != null) {
       return (
-        <Button onPress={onEdit} accessoryLeft={EditIcon} size={"small"} />
+        <Button onPress={handleEdit} accessoryLeft={EditIcon} size={"small"} />
       );
     }
     if (onDelete != null) {
       return (
-        <Button onPress={onDelete} accessoryLeft={DeleteIcon} size={"small"} />
+        <Button
+          onPress={handleDelete}
+          accessoryLeft={DeleteIcon}
+          size={"small"}
+        />
       );
     }
   };
