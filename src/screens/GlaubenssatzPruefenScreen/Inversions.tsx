@@ -124,6 +124,7 @@ export default function Inversions() {
       <TextInputModal
         title={"Umkehrung umbenennen"}
         placeholder={inversionToEdit ?? ""}
+        initialText={inversionToEdit ?? ""}
         isVisible={inversionToEdit != null}
         onCancel={() => {
           setInversionToEdit(null);

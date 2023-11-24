@@ -9,6 +9,7 @@ export interface TextInputModalProps {
   isVisible: boolean;
   title?: string;
   placeholder?: string;
+  initialText?: string;
   onCancel: () => void;
   onConfirm: (text: string) => void;
   onBackdropPress?: BackdropModalProps["onBackdropPress"];
@@ -26,6 +27,7 @@ const TextInputModal: React.FC<TextInputModalProps> = (props) => {
   useEffect(() => {
     if (props.isVisible) {
       inputRef.current?.focus();
+      if (props.initialText) setText(props.initialText);
     }
   }, [props.isVisible]);
 
