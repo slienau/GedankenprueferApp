@@ -57,7 +57,7 @@ const GlaubenssatzListe = forwardRef((props, ref) => {
 
   const listRef = useRef<List>(null);
 
-  const { data, filter, setFilter } = useGlaubenssatzListeData();
+  const { filteredData, filter, setFilter } = useGlaubenssatzListeData();
 
   useImperativeHandle(ref, () => ({
     scrollToTop: () => {
@@ -78,11 +78,11 @@ const GlaubenssatzListe = forwardRef((props, ref) => {
 
   return (
     <View style={styles.root}>
-      <GlaubenssatzListeFilter />
+      <GlaubenssatzListeFilter filter={filter} setFilter={setFilter} />
       <Divider style={{ marginVertical: 5 }} />
       <List
         ref={listRef}
-        data={data}
+        data={filteredData}
         renderItem={({ item }) => (
           <ListItem item={item} onPress={() => handleCardPress(item.id)} />
         )}

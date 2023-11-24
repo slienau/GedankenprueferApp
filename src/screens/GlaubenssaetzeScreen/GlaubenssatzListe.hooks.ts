@@ -19,7 +19,7 @@ export const useGlaubenssatzListeData = () => {
     ohneStatus: true,
   });
 
-  const data = React.useMemo(() => {
+  const filteredData = React.useMemo(() => {
     const data: Record<string, GlaubenssatzDataItem> = {};
 
     Object.values(glaubenssaetze).forEach((gs) => {
@@ -53,11 +53,18 @@ export const useGlaubenssatzListeData = () => {
       (a, b) =>
         new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
     );
-  }, [glaubenssaetze]);
+  }, [glaubenssaetze, filter]);
+
+  const handleSetFilter = (newFilter: Partial<typeof filter>) => {
+    setFilter((prev) => ({
+      ...prev,
+      ...newFilter,
+    }));
+  };
 
   return {
-    data,
+    filteredData,
     filter,
-    setFilter,
+    setFilter: handleSetFilter,
   };
 };
