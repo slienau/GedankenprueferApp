@@ -7,7 +7,7 @@ import {
   actions,
   getSelectedInversion,
   getSelectedInversionExamples,
-} from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+} from "../../store/glaubenssaetzeSlice";
 import ScreenHeader from "../../ui/ScreenHeader";
 import EditButtons from "../../ui/EditButtons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";

@@ -3,8 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import * as Crypto from "expo-crypto";
 import _ from "lodash";
 
-import universelleGS from "../../resources/universelle-glaubenssaetze";
-import { RootState } from "../../store";
+import universelleGS from "../resources/universelle-glaubenssaetze";
+import { RootState } from "./index";
 
 export type GlaubenssatzDataItem = {
   id: string;

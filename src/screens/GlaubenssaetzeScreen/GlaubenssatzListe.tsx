@@ -10,7 +10,7 @@ import { Card, List, Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
-import { GlaubenssatzDataItem, actions } from "./glaubenssaetzeSlice";
+import { GlaubenssatzDataItem, actions } from "../../store/glaubenssaetzeSlice";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";

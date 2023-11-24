@@ -3,7 +3,7 @@ import AppScreenLayout from "../AppScreenLayout";
 import { useSelector } from "react-redux";
 import { Button } from "@ui-kitten/components";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { getSelectedGs } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import { getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import Question1 from "./Question1";
 import Question2 from "./Question2";
 import Question3 from "./Question3";

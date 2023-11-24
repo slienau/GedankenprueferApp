@@ -2,10 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Card, Input, Text } from "@ui-kitten/components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actions,
-  getSelectedGs,
-} from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import InversionsHelpPopover from "./InversionsHelpPopover";
 import { useNavigation } from "@react-navigation/native";
 import { PlusIcon } from "../../ui/Icons";

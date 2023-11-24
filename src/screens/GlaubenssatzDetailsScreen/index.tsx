@@ -3,7 +3,7 @@ import AppScreenLayout from "../AppScreenLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
-import { actions, getSelectedGs } from "./glaubenssaetzeSlice";
+import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import { useNavigation } from "@react-navigation/native";
 import ScreenHeader from "../../ui/ScreenHeader";
 import { DeleteIcon } from "../../ui/Icons";

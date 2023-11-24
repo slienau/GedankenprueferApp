@@ -1,7 +1,7 @@
 import { NavigationContainer, RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GlaubenssaetzeScreen from "./screens/GlaubenssaetzeScreen";
-import GlaubenssatzDetailsScreen from "./screens/GlaubenssaetzeScreen/GlaubenssatzDetailsScreen";
+import GlaubenssatzDetailsScreen from "./screens/GlaubenssatzDetailsScreen";
 import GlaubenssatzPruefenScreen from "./screens/GlaubenssatzPruefenScreen";
 import UmkehrungPruefenScreen from "./screens/GlaubenssatzPruefenScreen/UmkehrungPruefenScreen";
 

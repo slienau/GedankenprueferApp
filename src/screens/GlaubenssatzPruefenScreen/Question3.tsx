@@ -2,10 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, Text } from "@ui-kitten/components";
 import { View } from "react-native";
-import {
-  actions,
-  getSelectedGs,
-} from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import styles from "./questions.styles";
 
 export default function Question3() {

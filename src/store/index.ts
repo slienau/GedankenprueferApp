@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
-import { glaubenssaetzeReducer } from "../screens/GlaubenssaetzeScreen/glaubenssaetzeSlice";
+import { glaubenssaetzeReducer } from "./glaubenssaetzeSlice";
 
 const persistConfig = {
   key: "root",
