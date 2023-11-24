@@ -130,7 +130,7 @@ export default function Inversions() {
           setInversionToEdit(null);
         }}
         onConfirm={editInversion}
-      ></TextInputModal>
+      />
     </View>
   );
 }

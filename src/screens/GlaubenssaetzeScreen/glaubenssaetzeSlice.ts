@@ -126,6 +126,52 @@ export const glaubenssaetzeSlice = createSlice({
       gs.inversions[state.selectedInversion].push(payload.example);
       gs.dateUpdated = new Date().toISOString();
     },
+    removeInversionExample: (
+      state,
+      action: PayloadAction<{
+        example: string;
+      }>,
+    ) => {
+      if (state.selectedGsId === null || state.selectedInversion === null)
+        return;
+      const { payload } = action;
+      const gs = state.entities[state.selectedGsId];
+
+      // remove example from inversion
+      gs.inversions[state.selectedInversion].splice(
+        gs.inversions[state.selectedInversion].findIndex(
+          (arrow) => arrow === payload.example,
+        ),
+        1,
+      );
+
+      // update dateUpdated
+      state.entities[state.selectedGsId].dateUpdated = new Date().toISOString();
+    },
+    editInversionExample: (
+      state,
+      action: PayloadAction<{
+        oldExample: string;
+        newExample: string;
+      }>,
+    ) => {
+      if (state.selectedGsId === null || state.selectedInversion === null)
+        return;
+      const { payload } = action;
+      const gs = state.entities[state.selectedGsId];
+
+      // replace example in inversion
+      gs.inversions[state.selectedInversion].splice(
+        gs.inversions[state.selectedInversion].findIndex(
+          (arrow) => arrow === payload.oldExample,
+        ),
+        1,
+        payload.newExample,
+      );
+
+      // update dateUpdated
+      state.entities[state.selectedGsId].dateUpdated = new Date().toISOString();
+    },
   },
 });
 

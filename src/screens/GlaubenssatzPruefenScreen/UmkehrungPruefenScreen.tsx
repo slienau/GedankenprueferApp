@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Button, Card, Input, Text } from "@ui-kitten/components";
+import { Card, Input, Text } from "@ui-kitten/components";
 import AppScreenLayout from "../AppScreenLayout";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,7 +9,9 @@ import {
   getSelectedInversionExamples,
 } from "../GlaubenssaetzeScreen/glaubenssaetzeSlice";
 import ScreenHeader from "../../ui/ScreenHeader";
-import { EditIcon } from "../../ui/Icons";
+import EditButtons from "../../ui/EditButtons";
+import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
+import TextInputModal from "../../ui/modals/TextInputModal";
 
 const UmkehrungPruefenScreen: React.FC<{}> = function () {
   const dispatch = useDispatch();
@@ -17,6 +19,10 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
   const examples = useSelector(getSelectedInversionExamples);
   const inversion = useSelector(getSelectedInversion);
   const inputRef = React.useRef<Input | null>(null);
+  const [exampleToEdit, setExampleToEdit] = React.useState<string | null>(null);
+  const [exampleToDelete, setExampleToDelete] = React.useState<string | null>(
+    null,
+  );
 
   if (inversion == null || examples == null) return null;
 
@@ -41,6 +47,25 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
     }
   };
 
+  const deleteExample = () => {
+    if (exampleToDelete != null) {
+      dispatch(actions.removeInversionExample({ example: exampleToDelete }));
+      setExampleToDelete(null);
+    }
+  };
+
+  const editExample = (newExample: string) => {
+    if (exampleToEdit != null) {
+      dispatch(
+        actions.editInversionExample({
+          oldExample: exampleToEdit,
+          newExample,
+        }),
+      );
+      setExampleToEdit(null);
+    }
+  };
+
   return (
     <AppScreenLayout title={"Umkehrung prüfen"}>
       <ScrollView style={styles.body}>
@@ -55,16 +80,9 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
                 <Text style={styles.exampleText}>
                   {index + 1}) {example}
                 </Text>
-                <Button
-                  onPress={() => {
-                    // dispatch(
-                    //   actions.removeInversionExample({
-                    //     example,
-                    //   }),
-                    // );
-                  }}
-                  appearance={"ghost"}
-                  accessoryLeft={EditIcon}
+                <EditButtons
+                  onDelete={() => setExampleToDelete(example)}
+                  onEdit={() => setExampleToEdit(example)}
                 />
               </View>
             </Card>
@@ -83,10 +101,33 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
             </View>
           </Card>
         </View>
-        {/*<View>*/}
-        {/*  <Button onPress={addExample} accessoryLeft={PlusIcon} />*/}
-        {/*</View>*/}
       </ScrollView>
+
+      <DeleteConfirmModal
+        title={"Beispiel löschen?"}
+        onConfirm={deleteExample}
+        onCancel={() => {
+          setExampleToDelete(null);
+        }}
+        isVisible={exampleToDelete != null}
+      >
+        <Text>
+          Möchtest du das Beispiel "
+          <Text style={{ fontWeight: "bold" }}>{exampleToDelete ?? ""}</Text>"
+          löschen?
+        </Text>
+      </DeleteConfirmModal>
+
+      <TextInputModal
+        title={"Beispiel umbenennen"}
+        placeholder={exampleToEdit ?? ""}
+        initialText={exampleToEdit ?? ""}
+        isVisible={exampleToEdit != null}
+        onCancel={() => {
+          setExampleToEdit(null);
+        }}
+        onConfirm={editExample}
+      />
     </AppScreenLayout>
   );
 };
