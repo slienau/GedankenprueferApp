@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import { useNavigation } from "@react-navigation/native";
 import ScreenHeader from "../../ui/ScreenHeader";
-import { DeleteIcon } from "../../ui/Icons";
+import { DeleteIcon, MagnifyingGlassIcon } from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
 import GlaubenssatzStatusSelect from "./GlaubenssatzStatusSelect";
 
@@ -38,11 +38,12 @@ export default function GlaubenssatzDetailsScreen() {
             // @ts-ignore
             navigation.navigate("Glaubenssatz prüfen");
           }}
+          accessoryLeft={MagnifyingGlassIcon}
         >
           Glaubenssatz prüfen
         </Button>
         <Button
-          accessoryRight={DeleteIcon}
+          accessoryLeft={DeleteIcon}
           status={"danger"}
           style={styles.button}
           onPress={toggleDeleteModalVisible}

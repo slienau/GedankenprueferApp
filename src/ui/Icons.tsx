@@ -36,3 +36,15 @@ export const NextIcon = (props: IconProps): IconElement => (
 export const PreviousIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="arrow-back-outline" />
 );
+
+export const MagnifyingGlassIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="search-outline" />
+);
+
+export const SaveIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="save-outline" />
+);
+
+export const CancelIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="slash-outline" />
+);

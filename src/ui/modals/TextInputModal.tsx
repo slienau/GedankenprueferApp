@@ -4,6 +4,7 @@ import { Button, Input, Text } from "@ui-kitten/components";
 import BackdropModal, { BackdropModalProps } from "./BackdropModal";
 
 import styles from "./TextInputModal.styles";
+import { CancelIcon, SaveIcon } from "../Icons";
 
 export interface TextInputModalProps {
   isVisible: boolean;
@@ -51,10 +52,16 @@ const TextInputModal: React.FC<TextInputModalProps> = (props) => {
           ref={inputRef}
         />
         <View style={styles.buttonContainer}>
-          <Button onPress={props.onCancel} status={"basic"}>
+          <Button
+            onPress={props.onCancel}
+            status={"basic"}
+            accessoryLeft={CancelIcon}
+          >
             Abbrechen
           </Button>
-          <Button onPress={handleConfirm}>Speichern</Button>
+          <Button onPress={handleConfirm} accessoryLeft={SaveIcon}>
+            Speichern
+          </Button>
         </View>
       </View>
     </BackdropModal>
