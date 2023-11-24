@@ -13,7 +13,6 @@ export const useGlaubenssatzListeData = () => {
 
   const [filter, setFilter] = React.useState({
     universelleGs: true,
-    eigeneGs: true,
     einschraenkendeGs: true,
     offenFuerZweifel: true,
     museumAlterGs: true,
@@ -24,53 +23,29 @@ export const useGlaubenssatzListeData = () => {
     const data: Record<string, GlaubenssatzDataItem> = {};
 
     Object.values(glaubenssaetze).forEach((gs) => {
-      // universelle Glaubenssätze
-      if (!gs.isOwnGs && filter.universelleGs) {
-        // @ts-ignore
-        if (gs.status === "Einschraenkend" && filter.einschraenkendeGs) {
-          data[gs.id] = gs;
-        }
-        // @ts-ignore
-        if (gs.status === "OffenFuerZweifel" && filter.offenFuerZweifel) {
-          data[gs.id] = gs;
-        }
-        // @ts-ignore
-        if (gs.status === "MuseumAlterGS" && filter.museumAlterGs) {
-          data[gs.id] = gs;
-        }
-        if (
-          // @ts-ignore
-          (gs.status === "Leer" ||
-            gs.status == undefined ||
-            gs.status === GlaubenssatzStatusType.Leer) &&
-          filter.ohneStatus
-        ) {
-          data[gs.id] = gs;
-        }
+      // universelle Glaubenssätze rausfiltern falls gewünscht (eigene werden immer angezeigt)
+      if (!gs.isOwnGs && !filter.universelleGs) return;
+
+      // @ts-ignore
+      if (gs.status === "Einschraenkend" && filter.einschraenkendeGs) {
+        data[gs.id] = gs;
       }
-      // eigene Glaubenssätze
-      if (gs.isOwnGs && filter.eigeneGs) {
+      // @ts-ignore
+      if (gs.status === "OffenFuerZweifel" && filter.offenFuerZweifel) {
+        data[gs.id] = gs;
+      }
+      // @ts-ignore
+      if (gs.status === "MuseumAlterGS" && filter.museumAlterGs) {
+        data[gs.id] = gs;
+      }
+      if (
         // @ts-ignore
-        if (gs.status === "Einschraenkend" && filter.einschraenkendeGs) {
-          data[gs.id] = gs;
-        }
-        // @ts-ignore
-        if (gs.status === "OffenFuerZweifel" && filter.offenFuerZweifel) {
-          data[gs.id] = gs;
-        }
-        // @ts-ignore
-        if (gs.status === "MuseumAlterGS" && filter.museumAlterGs) {
-          data[gs.id] = gs;
-        }
-        if (
-          // @ts-ignore
-          (gs.status === "Leer" ||
-            gs.status == undefined ||
-            gs.status === GlaubenssatzStatusType.Leer) &&
-          filter.ohneStatus
-        ) {
-          data[gs.id] = gs;
-        }
+        (gs.status === "Leer" ||
+          gs.status == undefined ||
+          gs.status === GlaubenssatzStatusType.Leer) &&
+        filter.ohneStatus
+      ) {
+        data[gs.id] = gs;
       }
     });
 
