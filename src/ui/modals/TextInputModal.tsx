@@ -50,6 +50,7 @@ const TextInputModal: React.FC<TextInputModalProps> = (props) => {
           onChangeText={setText}
           value={text}
           ref={inputRef}
+          onSubmitEditing={handleConfirm}
         />
         <View style={styles.buttonContainer}>
           <Button
