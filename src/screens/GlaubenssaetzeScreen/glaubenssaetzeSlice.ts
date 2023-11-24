@@ -94,17 +94,23 @@ export const glaubenssaetzeSlice = createSlice({
     },
     editInversion: (
       state,
-      action: PayloadAction<{
-        gsId: string;
-        inversion: string;
-        newInversion: string;
-      }>,
+      action: PayloadAction<{ oldInversion: string; newInversion: string }>,
     ) => {
-      const { gsId, inversion, newInversion } = action.payload;
-      const gs = state.entities[gsId];
-      // assign new key and delete old key
-      gs.inversions[newInversion] = gs.inversions[inversion];
-      delete gs.inversions[inversion];
+      const { oldInversion, newInversion } = action.payload;
+      if (state.selectedGsId === null) return;
+      const gs = state.entities[state.selectedGsId];
+
+      // Erstelle ein neues Inversionsobjekt mit den Keys in der gewünschten Reihenfolge
+      const newInversions = Object.keys(gs.inversions).reduce((obj, key) => {
+        if (key === oldInversion) {
+          return { ...obj, [newInversion]: gs.inversions[oldInversion] };
+        } else {
+          return { ...obj, [key]: gs.inversions[key] };
+        }
+      }, {});
+
+      // Ersetze das alte Inversionsobjekt durch das neue
+      gs.inversions = newInversions;
     },
     removeInversion: (
       state,

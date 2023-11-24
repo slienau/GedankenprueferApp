@@ -47,8 +47,7 @@ export default function Inversions() {
     if (inversionToEdit != null) {
       dispatch(
         actions.editInversion({
-          gsId: gs.id,
-          inversion: inversionToEdit,
+          oldInversion: inversionToEdit,
           newInversion,
         }),
       );
