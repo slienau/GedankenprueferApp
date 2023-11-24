@@ -6,17 +6,29 @@ import { StyleSheet, View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import { useNavigation } from "@react-navigation/native";
 import ScreenHeader from "../../ui/ScreenHeader";
-import { DeleteIcon, MagnifyingGlassIcon } from "../../ui/Icons";
+import { DeleteIcon, EditIcon, MagnifyingGlassIcon } from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
 import GlaubenssatzStatusSelect from "./GlaubenssatzStatusSelect";
+import TextInputModal from "../../ui/modals/TextInputModal";
+import Divider from "../../ui/Divider";
 
 export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector(getSelectedGs);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isDeleteModalVisible, setDeleteModalVisible] = React.useState(false);
+  const [isEditModalVisible, setEditModalVisible] = React.useState(false);
 
   if (gs == null) return null;
+
+  const handleEditGs = (title: string) => {
+    dispatch(actions.update({ id: gs.id, title }));
+    toggleEditModalVisible();
+  };
+
+  const toggleEditModalVisible = () => {
+    setEditModalVisible(!isEditModalVisible);
+  };
 
   const toggleDeleteModalVisible = () => {
     setDeleteModalVisible(!isDeleteModalVisible);
@@ -39,17 +51,32 @@ export default function GlaubenssatzDetailsScreen() {
             navigation.navigate("Glaubenssatz prüfen");
           }}
           accessoryLeft={MagnifyingGlassIcon}
+          size={"giant"}
         >
           Glaubenssatz prüfen
         </Button>
-        <Button
-          accessoryLeft={DeleteIcon}
-          status={"danger"}
-          style={styles.button}
-          onPress={toggleDeleteModalVisible}
-        >
-          Löschen
-        </Button>
+        <Divider />
+        <View>
+          <Button
+            style={styles.button}
+            onPress={toggleEditModalVisible}
+            accessoryLeft={EditIcon}
+            appearance={"outline"}
+            size={"small"}
+          >
+            Umbenennen
+          </Button>
+          <Button
+            accessoryLeft={DeleteIcon}
+            status={"danger"}
+            style={styles.button}
+            onPress={toggleDeleteModalVisible}
+            appearance={"outline"}
+            size={"small"}
+          >
+            Löschen
+          </Button>
+        </View>
       </View>
       <DeleteConfirmModal
         title={gs.title}
@@ -57,6 +84,13 @@ export default function GlaubenssatzDetailsScreen() {
         onConfirm={handleDeleteGs}
         onCancel={toggleDeleteModalVisible}
         isVisible={isDeleteModalVisible}
+      />
+      <TextInputModal
+        isVisible={isEditModalVisible}
+        onCancel={toggleEditModalVisible}
+        onConfirm={handleEditGs}
+        title={"Glaubenssatz umbenennen"}
+        initialText={gs.title}
       />
     </AppScreenLayout>
   );
