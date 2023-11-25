@@ -5,11 +5,13 @@ import FloatingActionButton from "../../ui/FloatingActionButton";
 import { useDispatch } from "react-redux";
 import { actions } from "../../store/glaubenssaetzeSlice";
 import TextInputModal from "../../ui/modals/TextInputModal";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GlaubenssaetzeScreen() {
   const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = React.useState(false);
   const gsListeRef = React.useRef<any>(null);
+  const navigation = useNavigation();
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -19,6 +21,9 @@ export default function GlaubenssaetzeScreen() {
     dispatch(actions.addGs(neuerGs));
     toggleModal();
     gsListeRef.current?.scrollToTop();
+    setTimeout(() => {
+      navigation.navigate("Glaubenssatz Details");
+    }, 100);
   };
 
   return (

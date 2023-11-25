@@ -8,9 +8,10 @@ import { RootState } from "./index";
 
 export enum GlaubenssatzStatusType {
   Leer = "   ",
-  Einschraenkend = "einschränkend",
-  OffenFuerZweifel = "offen für Zweifel",
-  MuseumAlterGS = "Museum alter GS",
+  Einschraenkend = "einschränkender Glaubenssatz",
+  OffenFuerZweifel = "Glaubenssatz offen für Zweifel",
+  MuseumAlterGS = "Museum alter Glaubenssätze",
+  PositiverGS = "Positiver Glaubenssatz",
 }
 
 export type GlaubenssatzDataItem = {
@@ -69,6 +70,7 @@ export const glaubenssaetzeSlice = createSlice({
     addGs: (state, action: PayloadAction<string>) => {
       const newGs = createNewGs(action.payload, true);
       state.entities[newGs.id] = newGs;
+      state.selectedGsId = newGs.id;
     },
     deleteGs: (state, action: PayloadAction<{ id: string }>) => {
       delete state.entities[action.payload.id];

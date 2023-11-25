@@ -11,6 +11,7 @@ export type GlaubenssatzListeFilterType = {
   einschraenkendeGs: boolean;
   offenFuerZweifel: boolean;
   museumAlterGs: boolean;
+  positiverGs: boolean;
   ohneStatus: boolean;
 };
 
@@ -24,6 +25,7 @@ export const useGlaubenssatzListeData = () => {
     einschraenkendeGs: true,
     offenFuerZweifel: true,
     museumAlterGs: true,
+    positiverGs: true,
     ohneStatus: true,
   });
 
@@ -44,6 +46,10 @@ export const useGlaubenssatzListeData = () => {
       }
       // @ts-ignore
       if (gs.status === "MuseumAlterGS" && filter.museumAlterGs) {
+        data[gs.id] = gs;
+      }
+      // @ts-ignore
+      if (gs.status === "PositiverGS" && filter.positiverGs) {
         data[gs.id] = gs;
       }
       if (

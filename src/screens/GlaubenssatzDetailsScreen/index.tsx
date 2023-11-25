@@ -44,17 +44,32 @@ export default function GlaubenssatzDetailsScreen() {
       <ScreenHeader title={gs.title} />
       <View style={styles.body}>
         <GlaubenssatzStatusSelect />
-        <Button
-          style={styles.button}
-          onPress={() => {
-            // @ts-ignore
-            navigation.navigate("Glaubenssatz prüfen");
-          }}
-          accessoryLeft={MagnifyingGlassIcon}
-          size={"giant"}
-        >
-          Glaubenssatz prüfen
-        </Button>
+        {gs.status !== "PositiverGS" && (
+          <Button
+            style={styles.button}
+            onPress={() => {
+              // @ts-ignore
+              navigation.navigate("Glaubenssatz prüfen");
+            }}
+            accessoryLeft={MagnifyingGlassIcon}
+            size={"giant"}
+          >
+            Glaubenssatz prüfen
+          </Button>
+        )}
+        {gs.status === "PositiverGS" && (
+          <Button
+            style={styles.button}
+            onPress={() => {
+              // @ts-ignore
+              // navigation.navigate("Glaubenssatz prüfen");
+            }}
+            accessoryLeft={MagnifyingGlassIcon}
+            size={"giant"}
+          >
+            Beispiele
+          </Button>
+        )}
         <Divider />
         <View>
           <Button

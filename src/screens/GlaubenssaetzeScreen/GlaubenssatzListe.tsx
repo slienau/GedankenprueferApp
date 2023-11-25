@@ -38,6 +38,10 @@ const ListItem = React.memo(({ item, onPress }: ListItemProps) => {
       break;
     // @ts-ignore
     case "MuseumAlterGS":
+      status = "info";
+      break;
+    // @ts-ignore
+    case "PositiverGS":
       status = "success";
       break;
   }

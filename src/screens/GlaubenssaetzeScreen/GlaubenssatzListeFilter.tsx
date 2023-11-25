@@ -31,7 +31,8 @@ const GlaubenssatzListeFilter: React.FC<GlaubenssatzListeFilterProps> = ({
       einschraenkendeGs: selectedRows.includes(1),
       offenFuerZweifel: selectedRows.includes(2),
       museumAlterGs: selectedRows.includes(3),
-      ohneStatus: selectedRows.includes(4),
+      positiverGs: selectedRows.includes(4),
+      ohneStatus: selectedRows.includes(5),
     });
   };
 
@@ -45,8 +46,9 @@ const GlaubenssatzListeFilter: React.FC<GlaubenssatzListeFilterProps> = ({
     >
       <SelectItem title="Universelle Glaubenssätze" />
       <SelectItem title="einschränkende Glaubenssätze" />
-      <SelectItem title="offen für Zweifel" />
+      <SelectItem title="Glaubenssätze offen für Zweifel" />
       <SelectItem title="Museum alter Glaubenssätze" />
+      <SelectItem title="Positiver Glaubenssatz" />
       <SelectItem title="ohne Status" />
     </Select>
   );
