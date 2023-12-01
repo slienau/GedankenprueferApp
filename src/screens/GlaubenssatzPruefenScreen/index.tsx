@@ -24,6 +24,8 @@ export default function GlaubenssatzPruefenScreen() {
   const nextStep = () => {
     if (gs.q1_isThatTrue === false && step === 1) {
       setStep(3);
+    } else if (step === 5) {
+      navigation.goBack();
     } else {
       setStep(step + 1);
     }
@@ -32,17 +34,19 @@ export default function GlaubenssatzPruefenScreen() {
   const previousStep = () => {
     if (gs.q1_isThatTrue === false && step === 3) {
       setStep(1);
+    } else if (step === 1) {
+      navigation.goBack();
     } else {
       setStep(step - 1);
     }
   };
 
-  const finish = () => {
-    navigation.goBack();
-  };
-
   return (
-    <AppScreenLayout title={"Glaubenssatz prüfen"}>
+    <AppScreenLayout
+      title={"Glaubenssatz prüfen"}
+      onGoBack={previousStep}
+      disableGoBack={true}
+    >
       <ScrollView style={styles.body}>
         <ScreenHeader title={gs.title} />
 
@@ -58,34 +62,19 @@ export default function GlaubenssatzPruefenScreen() {
 
         <Divider />
 
-        <View
-          style={[
-            styles.buttonContainer,
-            step === 1 && styles.singleButtonContainer,
-          ]}
-        >
-          {step !== 1 && (
-            <Button
-              onPress={previousStep}
-              disabled={step === 1}
-              accessoryLeft={PreviousIcon}
-            >
-              zurück
-            </Button>
-          )}
+        <View style={styles.buttonContainer}>
+          <Button onPress={previousStep} accessoryLeft={PreviousIcon}>
+            zurück
+          </Button>
 
           {step !== 5 && (
-            <Button
-              onPress={nextStep}
-              // disabled={step === 5}
-              accessoryRight={NextIcon}
-            >
+            <Button onPress={nextStep} accessoryRight={NextIcon}>
               weiter
             </Button>
           )}
 
           {step === 5 && (
-            <Button onPress={finish} accessoryRight={CheckIcon}>
+            <Button onPress={nextStep} accessoryRight={CheckIcon}>
               fertig
             </Button>
           )}
@@ -109,9 +98,6 @@ const styles = StyleSheet.create({
     // marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  singleButtonContainer: {
-    justifyContent: "flex-end",
   },
   divider: {
     marginVertical: 20,

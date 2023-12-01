@@ -6,7 +6,12 @@ import { StyleSheet, View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import { useNavigation } from "@react-navigation/native";
 import ScreenHeader from "../../ui/ScreenHeader";
-import { DeleteIcon, EditIcon, MagnifyingGlassIcon } from "../../ui/Icons";
+import {
+  BackIcon,
+  DeleteIcon,
+  EditIcon,
+  MagnifyingGlassIcon,
+} from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
 import GlaubenssatzStatusSelect from "./GlaubenssatzStatusSelect";
 import TextInputModal from "../../ui/modals/TextInputModal";
@@ -73,6 +78,15 @@ export default function GlaubenssatzDetailsScreen() {
         )}
         <Divider />
         <View>
+          <Button
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+            accessoryLeft={BackIcon}
+            appearance={"outline"}
+            size={"small"}
+          >
+            Zurück zur Übersicht
+          </Button>
           <Button
             style={styles.button}
             onPress={toggleEditModalVisible}

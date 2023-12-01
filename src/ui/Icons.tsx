@@ -52,3 +52,7 @@ export const CancelIcon = (props: IconProps): IconElement => (
 export const CheckIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="checkmark-outline" />
 );
+
+export const BackIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="arrow-back" />
+);

@@ -6,9 +6,6 @@ import {
 } from "react-native";
 import {
   Divider,
-  Icon,
-  IconElement,
-  IconProps,
   Layout,
   TopNavigation,
   TopNavigationAction,
@@ -16,28 +13,30 @@ import {
 } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { BackIcon } from "../ui/Icons";
 
 export interface AppScreenLayoutProps {
   title?: string;
   topNavigationProps?: TopNavigationProps;
   children?: React.ReactNode;
+  onGoBack?: () => void;
+  disableGoBack?: boolean;
 }
 
-const BackIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="arrow-back" />
-);
-
-const BackAction = () => {
-  const navigation = useNavigation();
-  return (
-    <TopNavigationAction
-      icon={navigation.canGoBack() ? BackIcon : undefined}
-      onPress={navigation.goBack}
-    />
-  );
-};
-
 const AppScreenLayout: React.FC<AppScreenLayoutProps> = (props) => {
+  const navigation = useNavigation();
+
+  const BackAction = props.disableGoBack
+    ? undefined
+    : () => {
+        return (
+          <TopNavigationAction
+            icon={navigation.canGoBack() ? BackIcon : undefined}
+            onPress={props.onGoBack || navigation.goBack}
+          />
+        );
+      };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
