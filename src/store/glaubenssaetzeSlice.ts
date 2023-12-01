@@ -12,11 +12,15 @@ export interface GlaubenssaetzeState {
   selectedInversion: string | null;
 }
 
+const randomInteger = () => {
+  return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+};
+
 const createNewGs = (
   title: string,
   isOwnGs: boolean = false,
 ): GlaubenssatzDataItem => {
-  const id = "123";
+  const id = randomInteger();
   return {
     id,
     title,
@@ -30,9 +34,9 @@ const createNewGs = (
 
 const initialState: GlaubenssaetzeState = {
   entities: universelleGS.reduce(
-    (acc: Record<string, GlaubenssatzDataItem>, gs: string) => {
-      const id = "123";
-      acc[id] = createNewGs(gs);
+    (acc: Record<number, GlaubenssatzDataItem>, gs: string) => {
+      const newGs = createNewGs(gs);
+      acc[newGs.id] = newGs;
       return acc;
     },
     {},
@@ -50,10 +54,10 @@ export const glaubenssaetzeSlice = createSlice({
       state.entities[newGs.id] = newGs;
       state.selectedGsId = newGs.id;
     },
-    deleteGs: (state, action: PayloadAction<{ id: string }>) => {
+    deleteGs: (state, action: PayloadAction<{ id: number }>) => {
       delete state.entities[action.payload.id];
     },
-    selectGs: (state, action: PayloadAction<{ id: string }>) => {
+    selectGs: (state, action: PayloadAction<{ id: number }>) => {
       state.selectedGsId = action.payload.id;
     },
     selectInversion: (state, action: PayloadAction<{ inversion: string }>) => {
@@ -62,7 +66,7 @@ export const glaubenssaetzeSlice = createSlice({
     update: (
       state,
       action: PayloadAction<
-        { id: string } & Partial<Omit<GlaubenssatzDataItem, "inversions">>
+        { id: number } & Partial<Omit<GlaubenssatzDataItem, "inversions">>
       >,
     ) => {
       const { payload } = action;
@@ -71,7 +75,7 @@ export const glaubenssaetzeSlice = createSlice({
     },
     addInversion: (
       state,
-      action: PayloadAction<{ id: string; inversion: string }>,
+      action: PayloadAction<{ id: number; inversion: string }>,
     ) => {
       const { payload } = action;
       const gs = state.entities[payload.id];
@@ -174,7 +178,9 @@ export const glaubenssaetzeReducer = glaubenssaetzeSlice.reducer;
 
 // selectors
 const getDataState = (state: RootState) => state.glaubenssaetze.entities;
-const getSelectedGsId = (state: RootState) => state.glaubenssaetze.selectedGsId;
+
+export const getSelectedGsId = (state: RootState) =>
+  state.glaubenssaetze.selectedGsId;
 
 export const getSelectedGs = createSelector(
   [getDataState, getSelectedGsId],

@@ -68,7 +68,7 @@ const GlaubenssatzListe = forwardRef((props, ref) => {
     },
   }));
 
-  const handleCardPress = useCallback((id: string) => {
+  const handleCardPress = useCallback((id: number) => {
     dispatch(actions.selectGs({ id }));
     // @ts-ignore
     navigation.navigate("Glaubenssatz Details");

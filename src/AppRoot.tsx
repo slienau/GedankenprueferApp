@@ -9,7 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { StatusBar } from "expo-status-bar";
 import { initDb } from "./services/db";
 
-initDb();
+// initDb();
 
 export default () => (
   <Provider store={store}>

@@ -11,7 +11,7 @@ export enum GlaubenssatzStatusType {
 }
 
 export type GlaubenssatzDataItem = {
-  id: string;
+  id: number;
   title: string;
   q1_isThatTrue?: boolean;
   q2_isThatAbsolutelyTrue?: boolean;
@@ -70,7 +70,7 @@ export const initDb = () => {
         universelleGS.forEach((title) => {
           insertGlaubenssatz(title, true);
         });
-        console.log("inserted");
+        console.log("inserted universelle glaubenssaetze");
       } else {
         console.log("glaubenssatz db not empty");
       }
@@ -82,7 +82,7 @@ export const insertGlaubenssatz = (
   title: string,
   isUniversal: boolean = false,
 ) => {
-  console.debug("insertGlaubenssatz", title, isUniversal);
+  console.debug("db --- insertGlaubenssatz", title, isUniversal);
   try {
     db.transaction((tx) => {
       tx.executeSql(
@@ -112,6 +112,7 @@ export const insertGlaubenssatz = (
 };
 
 export const updateTitle = (id: number, title: string) => {
+  console.debug("db --- updateTitle", id, title);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET title = ?, dateUpdated = ? WHERE id = ?",
@@ -121,6 +122,7 @@ export const updateTitle = (id: number, title: string) => {
 };
 
 export const updateQ1 = (id: number, q1: boolean) => {
+  console.debug("db --- updateQ1", id, q1);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET q1_isThatTrue = ?, dateUpdated = ? WHERE id = ?",
@@ -132,6 +134,7 @@ export const updateQ1 = (id: number, q1: boolean) => {
 // Do the same for the rest of the update functions
 
 export const updateQ2 = (id: number, q2: boolean) => {
+  console.debug("db --- updateQ2", id, q2);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET q2_isThatAbsolutelyTrue = ?, dateUpdated = ? WHERE id = ?",
@@ -141,6 +144,7 @@ export const updateQ2 = (id: number, q2: boolean) => {
 };
 
 export const updateQ3 = (id: number, q3: string) => {
+  console.debug("db --- updateQ3", id, q3);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET q3_whatHappensIfYouBelieveTheThought = ?, dateUpdated = ? WHERE id = ?",
@@ -150,6 +154,7 @@ export const updateQ3 = (id: number, q3: string) => {
 };
 
 export const updateQ4 = (id: number, q4: string) => {
+  console.debug("db --- updateQ4", id, q4);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET q4_whoWouldYouBeWithoutTheThought = ?, dateUpdated = ? WHERE id = ?",
@@ -159,6 +164,7 @@ export const updateQ4 = (id: number, q4: string) => {
 };
 
 export const updateStatus = (id: number, status: GlaubenssatzStatusType) => {
+  console.debug("db --- updateStatus", id, status);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET status = ?, dateUpdated = ? WHERE id = ?",
@@ -171,6 +177,7 @@ export const updateInversions = (
   id: number,
   inversions: Record<string, Array<string>>,
 ) => {
+  console.debug("db --- updateInversions", id, inversions);
   db.transaction((tx) => {
     tx.executeSql(
       "UPDATE glaubenssaetze SET inversions = ?, dateUpdated = ? WHERE id = ?",
@@ -180,6 +187,7 @@ export const updateInversions = (
 };
 
 export const deleteGlaubenssatz = (id: number) => {
+  console.debug("db --- deleteGlaubenssatz", id);
   db.transaction((tx) => {
     tx.executeSql("DELETE FROM glaubenssaetze WHERE id = ?", [id]);
   });
@@ -189,6 +197,7 @@ export const getGlaubenssatzById = (
   id: number,
   callback: (data: GlaubenssatzDataItem) => void,
 ) => {
+  console.debug("db --- getGlaubenssatzById", id);
   db.transaction((tx) => {
     tx.executeSql(
       "SELECT * FROM glaubenssaetze WHERE id = ?",
@@ -212,6 +221,7 @@ export const getGlaubenssatzById = (
 export const getGlaubenssaetze = (callback: {
   (data: GlaubenssatzDataItem[]): void;
 }) => {
+  console.debug("db --- getGlaubenssaetze");
   db.transaction((tx) => {
     tx.executeSql("SELECT * FROM glaubenssaetze", [], (_, { rows }) => {
       let data: GlaubenssatzDataItem[] = rows._array;
@@ -225,6 +235,7 @@ export const getGlaubenssaetze = (callback: {
           }
         }
       });
+      console.debug("db --- getGlaubenssaetze length", data.length);
       callback(data);
     });
   });
