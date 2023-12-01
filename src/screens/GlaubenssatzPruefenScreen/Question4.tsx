@@ -11,7 +11,7 @@ export default function Question4() {
   const dispatch = useDispatch();
 
   const [text, setText] = React.useState<string>(
-    gs?.q3_whatHappensIfYouBelieveTheThought ?? "",
+    gs?.q4_whoWouldYouBeWithoutTheThought ?? "",
   );
 
   const storeText = React.useCallback(
