@@ -5,6 +5,7 @@ import {
   GlaubenssatzDataItem,
   GlaubenssatzStatusType,
 } from "../../services/db";
+import { useIsFocused } from "@react-navigation/native";
 
 export type GlaubenssatzListeFilterType = {
   universelleGs: boolean;
@@ -20,6 +21,8 @@ export const useGlaubenssatzListeData = () => {
     (state: RootState) => state.glaubenssaetze.entities,
   );
 
+  const isFocused = useIsFocused();
+
   const [filter, setFilter] = React.useState<GlaubenssatzListeFilterType>({
     universelleGs: true,
     einschraenkendeGs: true,
@@ -29,7 +32,12 @@ export const useGlaubenssatzListeData = () => {
     ohneStatus: true,
   });
 
-  const filteredData = React.useMemo(() => {
+  const [filteredData, setFilteredData] = React.useState<
+    Array<GlaubenssatzDataItem>
+  >([]);
+
+  React.useEffect(() => {
+    if (!isFocused) return;
     const data: Record<string, GlaubenssatzDataItem> = {};
 
     Object.values(glaubenssaetze).forEach((gs) => {
@@ -73,11 +81,13 @@ export const useGlaubenssatzListeData = () => {
       }
     });
 
-    return Object.values(data).sort(
-      (a, b) =>
-        new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
+    setFilteredData(
+      Object.values(data).sort(
+        (a, b) =>
+          new Date(b.dateUpdated).getTime() - new Date(a.dateUpdated).getTime(),
+      ),
     );
-  }, [glaubenssaetze, filter]);
+  }, [glaubenssaetze, filter, isFocused]);
 
   const handleSetFilter = (newFilter: Partial<GlaubenssatzListeFilterType>) => {
     console.debug("Glaubenssatz filter change", newFilter);
@@ -86,13 +96,6 @@ export const useGlaubenssatzListeData = () => {
       ...newFilter,
     }));
   };
-
-  console.debug(
-    "filteredData length:",
-    filteredData.length,
-    "; filter:",
-    filter,
-  );
 
   return {
     filteredData,
