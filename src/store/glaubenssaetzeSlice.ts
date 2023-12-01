@@ -105,7 +105,7 @@ export const glaubenssaetzeSlice = createSlice({
     },
     removeInversion: (
       state,
-      action: PayloadAction<{ gsId: string; inversion: string }>,
+      action: PayloadAction<{ gsId: number; inversion: string }>,
     ) => {
       const { payload } = action;
       delete state.entities[payload.gsId].inversions[payload.inversion];
