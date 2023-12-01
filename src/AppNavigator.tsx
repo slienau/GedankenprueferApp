@@ -1,9 +1,10 @@
-import { NavigationContainer, RouteProp } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GlaubenssaetzeScreen from "./screens/GlaubenssaetzeScreen";
 import GlaubenssatzDetailsScreen from "./screens/GlaubenssatzDetailsScreen";
 import GlaubenssatzPruefenScreen from "./screens/GlaubenssatzPruefenScreen";
 import UmkehrungPruefenScreen from "./screens/GlaubenssatzPruefenScreen/UmkehrungPruefenScreen";
+import PositivenGlaubenssatzPruefenScreen from "./screens/GlaubenssatzPruefenScreen/PositivenGlaubenssatzPruefenScreen";
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigator() {
@@ -21,8 +22,11 @@ export default function AppNavigator() {
         />
         <Stack.Screen
           name={"UmkehrungPruefen"}
-          // @ts-ignore
           component={UmkehrungPruefenScreen}
+        />
+        <Stack.Screen
+          name={"PositivenGlaubenssatzPruefen"}
+          component={PositivenGlaubenssatzPruefenScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

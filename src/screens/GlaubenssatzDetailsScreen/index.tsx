@@ -63,7 +63,7 @@ export default function GlaubenssatzDetailsScreen() {
             style={styles.button}
             onPress={() => {
               // @ts-ignore
-              // navigation.navigate("Glaubenssatz prüfen");
+              navigation.navigate("PositivenGlaubenssatzPruefen");
             }}
             accessoryLeft={MagnifyingGlassIcon}
             size={"giant"}

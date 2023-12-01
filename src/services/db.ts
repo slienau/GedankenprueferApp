@@ -22,6 +22,7 @@ export type GlaubenssatzDataItem = {
   isUniversal: boolean;
   status: GlaubenssatzStatusType;
   inversions: Record<string, Array<string>>; // key: inversion; value: array of examples
+  positiveExamples: Array<string>;
 };
 
 function openDatabase() {

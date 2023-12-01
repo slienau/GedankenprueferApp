@@ -1,35 +1,28 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actions,
-  getSelectedInversion,
-  getSelectedInversionExamples,
-} from "../../store/glaubenssaetzeSlice";
+import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import FindExamplesScreen from "./FindExamplesScreen";
 
-const UmkehrungPruefenScreen: React.FC<{}> = function () {
+const PositivenGlaubenssatzPruefenScreen: React.FC<{}> = function () {
   const dispatch = useDispatch();
 
-  const examples = useSelector(getSelectedInversionExamples);
-  const inversion = useSelector(getSelectedInversion);
-
-  if (inversion == null || examples == null) return null;
+  const gs = useSelector(getSelectedGs);
 
   const handleAddExample = (example: string) => {
     dispatch(
-      actions.addInversionExample({
+      actions.addPositiveExample({
         example,
       }),
     );
   };
 
   const handleDeleteExample = (example: string) => {
-    dispatch(actions.removeInversionExample({ example }));
+    dispatch(actions.removePositiveExample({ example }));
   };
 
   const handleEditExample = (oldExample: string, newExample: string) => {
     dispatch(
-      actions.editInversionExample({
+      actions.editPositiveExample({
         oldExample,
         newExample,
       }),
@@ -38,8 +31,8 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
 
   return (
     <FindExamplesScreen
-      statement={inversion}
-      examples={examples || []}
+      statement={gs?.title ?? ""}
+      examples={gs?.positiveExamples ?? []}
       onAddExample={handleAddExample}
       onDeleteExample={handleDeleteExample}
       onEditExample={handleEditExample}
@@ -47,4 +40,4 @@ const UmkehrungPruefenScreen: React.FC<{}> = function () {
   );
 };
 
-export default UmkehrungPruefenScreen;
+export default PositivenGlaubenssatzPruefenScreen;

@@ -29,6 +29,7 @@ const createNewGs = (
     isUniversal: isOwnGs,
     status: GlaubenssatzStatusType.Leer,
     inversions: {},
+    positiveExamples: [],
   };
 };
 
@@ -162,6 +163,58 @@ export const glaubenssaetzeSlice = createSlice({
         gs.inversions[state.selectedInversion].findIndex(
           (arrow) => arrow === payload.oldExample,
         ),
+        1,
+        payload.newExample,
+      );
+
+      // update dateUpdated
+      state.entities[state.selectedGsId].dateUpdated = new Date().toISOString();
+    },
+    addPositiveExample: (
+      state,
+      action: PayloadAction<{
+        example: string;
+      }>,
+    ) => {
+      if (state.selectedGsId === null) return;
+      const { payload } = action;
+      const gs = state.entities[state.selectedGsId];
+      gs.positiveExamples.push(payload.example);
+      gs.dateUpdated = new Date().toISOString();
+    },
+    removePositiveExample: (
+      state,
+      action: PayloadAction<{
+        example: string;
+      }>,
+    ) => {
+      if (state.selectedGsId === null) return;
+      const { payload } = action;
+      const gs = state.entities[state.selectedGsId];
+
+      // remove example from inversion
+      gs.positiveExamples.splice(
+        gs.positiveExamples.findIndex((arrow) => arrow === payload.example),
+        1,
+      );
+
+      // update dateUpdated
+      state.entities[state.selectedGsId].dateUpdated = new Date().toISOString();
+    },
+    editPositiveExample: (
+      state,
+      action: PayloadAction<{
+        oldExample: string;
+        newExample: string;
+      }>,
+    ) => {
+      if (state.selectedGsId === null) return;
+      const { payload } = action;
+      const gs = state.entities[state.selectedGsId];
+
+      // replace example in inversion
+      gs.positiveExamples.splice(
+        gs.positiveExamples.findIndex((arrow) => arrow === payload.oldExample),
         1,
         payload.newExample,
       );
