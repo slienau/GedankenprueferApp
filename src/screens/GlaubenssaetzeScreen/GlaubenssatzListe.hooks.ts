@@ -1,10 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import {
   GlaubenssatzDataItem,
   GlaubenssatzStatusType,
-} from "../../store/glaubenssaetzeSlice";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+} from "../../services/db";
 
 export type GlaubenssatzListeFilterType = {
   universelleGs: boolean;
@@ -34,7 +34,7 @@ export const useGlaubenssatzListeData = () => {
 
     Object.values(glaubenssaetze).forEach((gs) => {
       // universelle Glaubenssätze rausfiltern falls gewünscht (eigene werden immer angezeigt)
-      if (!gs.isOwnGs && !filter.universelleGs) return;
+      if (!gs.isUniversal && !filter.universelleGs) return;
 
       // @ts-ignore
       if (gs.status === "Einschraenkend" && filter.einschraenkendeGs) {

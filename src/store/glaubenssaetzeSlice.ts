@@ -1,32 +1,10 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import * as Crypto from "expo-crypto";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 
 import universelleGS from "../resources/universelle-glaubenssaetze";
 import { RootState } from "./index";
-
-export enum GlaubenssatzStatusType {
-  Leer = "   ",
-  Einschraenkend = "einschränkender Glaubenssatz",
-  OffenFuerZweifel = "Glaubenssatz offen für Zweifel",
-  MuseumAlterGS = "Museum alter Glaubenssätze",
-  PositiverGS = "Positiver Glaubenssatz",
-}
-
-export type GlaubenssatzDataItem = {
-  id: string;
-  title: string;
-  q1_isThatTrue?: boolean;
-  q2_isThatAbsolutelyTrue?: boolean;
-  q3_whatHappensIfYouBelieveTheThought?: string;
-  q4_whoWouldYouBeWithoutTheThought?: string;
-  dateCreated: string;
-  dateUpdated: string;
-  isOwnGs: boolean;
-  status: GlaubenssatzStatusType;
-  inversions: Record<string, Array<string>>; // key: inversion; value: array of examples
-};
+import { GlaubenssatzDataItem, GlaubenssatzStatusType } from "../services/db";
 
 export interface GlaubenssaetzeState {
   entities: Record<string, GlaubenssatzDataItem>;
@@ -38,13 +16,13 @@ const createNewGs = (
   title: string,
   isOwnGs: boolean = false,
 ): GlaubenssatzDataItem => {
-  const id = Crypto.randomUUID();
+  const id = "123";
   return {
     id,
     title,
     dateCreated: new Date().toISOString(),
     dateUpdated: new Date().toISOString(),
-    isOwnGs,
+    isUniversal: isOwnGs,
     status: GlaubenssatzStatusType.Leer,
     inversions: {},
   };
@@ -53,7 +31,7 @@ const createNewGs = (
 const initialState: GlaubenssaetzeState = {
   entities: universelleGS.reduce(
     (acc: Record<string, GlaubenssatzDataItem>, gs: string) => {
-      const id = Crypto.randomUUID();
+      const id = "123";
       acc[id] = createNewGs(gs);
       return acc;
     },

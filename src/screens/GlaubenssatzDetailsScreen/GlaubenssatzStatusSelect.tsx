@@ -2,11 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IndexPath, Select, SelectItem } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
-import {
-  actions,
-  getSelectedGs,
-  GlaubenssatzStatusType,
-} from "../../store/glaubenssaetzeSlice";
+import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
+import { GlaubenssatzStatusType } from "../../services/db";
 
 const statusOptions = Object.keys(GlaubenssatzStatusType);
 

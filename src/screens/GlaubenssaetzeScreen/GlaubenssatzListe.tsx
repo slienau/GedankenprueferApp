@@ -10,11 +10,12 @@ import { Card, Divider, List, Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { actions, GlaubenssatzDataItem } from "../../store/glaubenssaetzeSlice";
+import { actions } from "../../store/glaubenssaetzeSlice";
 import { RootState } from "../../store";
 import { EvaStatus } from "@ui-kitten/components/devsupport";
 import GlaubenssatzListeFilter from "./GlaubenssatzListeFilter";
 import { useGlaubenssatzListeData } from "./GlaubenssatzListe.hooks";
+import { GlaubenssatzDataItem } from "../../services/db";
 
 type ListItemProps = {
   item: GlaubenssatzDataItem;
