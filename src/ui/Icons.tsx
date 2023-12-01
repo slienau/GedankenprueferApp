@@ -30,11 +30,11 @@ export const MoreHorizontalIcon = (props: IconProps): IconElement => (
 );
 
 export const NextIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="arrow-forward-outline" />
+  <Icon {...props} name="chevron-right-outline" />
 );
 
 export const PreviousIcon = (props: IconProps): IconElement => (
-  <Icon {...props} name="arrow-back-outline" />
+  <Icon {...props} name="chevron-left-outline" />
 );
 
 export const MagnifyingGlassIcon = (props: IconProps): IconElement => (

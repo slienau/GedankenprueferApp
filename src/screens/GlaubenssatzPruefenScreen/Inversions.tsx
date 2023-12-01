@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import InversionsHelpPopover from "./InversionsHelpPopover";
 import { useNavigation } from "@react-navigation/native";
-import { PlusIcon } from "../../ui/Icons";
+import { NextIcon, PlusIcon } from "../../ui/Icons";
 import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
 import EditButtons from "../../ui/EditButtons";
 import TextInputModal from "../../ui/modals/TextInputModal";
@@ -76,7 +76,20 @@ export default function Inversions() {
             <View style={styles.cardBody}>
               <Text category={"s1"} style={styles.inversionText}>
                 {inversion}
+                {"\n"}
+                <Text
+                  style={{
+                    fontStyle: "italic",
+                    color:
+                      gs?.inversions[inversion].length > 2
+                        ? "green"
+                        : undefined,
+                  }}
+                >
+                  {gs?.inversions[inversion].length} Beispiele
+                </Text>
               </Text>
+              <NextIcon style={styles.nextIcon} />
               <EditButtons
                 onDelete={() => setInversionToDelete(inversion)}
                 onEdit={() => setInversionToEdit(inversion)}
@@ -148,7 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    marginBottom: 15,
+    marginBottom: 0,
   },
   cardBody: {
     flexDirection: "row",
@@ -163,5 +176,9 @@ const styles = StyleSheet.create({
   newInversionInput: {
     flex: 1,
     marginRight: 10,
+  },
+  nextIcon: {
+    width: 32,
+    height: 32,
   },
 });
