@@ -15,7 +15,10 @@ import { RootState } from "../../store";
 import { EvaStatus } from "@ui-kitten/components/devsupport";
 import GlaubenssatzListeFilter from "./GlaubenssatzListeFilter";
 import { useGlaubenssatzListeData } from "./GlaubenssatzListe.hooks";
-import { GlaubenssatzDataItem } from "../../services/db";
+import {
+  GlaubenssatzDataItem,
+  GlaubenssatzStatusType,
+} from "../../services/db";
 
 type ListItemProps = {
   item: GlaubenssatzDataItem;
@@ -25,24 +28,19 @@ type ListItemProps = {
 const ListItem = React.memo(({ item, onPress }: ListItemProps) => {
   let status: EvaStatus = "basic";
   switch (item.status) {
-    // @ts-ignore
-    case "Leer":
+    case GlaubenssatzStatusType.Leer:
       status = "basic";
       break;
-    // @ts-ignore
-    case "Einschraenkend":
+    case GlaubenssatzStatusType.Einschraenkend:
       status = "danger";
       break;
-    // @ts-ignore
-    case "OffenFuerZweifel":
+    case GlaubenssatzStatusType.OffenFuerZweifel:
       status = "warning";
       break;
-    // @ts-ignore
-    case "MuseumAlterGS":
+    case GlaubenssatzStatusType.MuseumAlterGS:
       status = "info";
       break;
-    // @ts-ignore
-    case "PositiverGS":
+    case GlaubenssatzStatusType.PositiverGS:
       status = "success";
       break;
   }

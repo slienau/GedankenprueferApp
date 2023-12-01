@@ -1,7 +1,7 @@
 import React from "react";
+import { Button } from "@ui-kitten/components";
 import AppScreenLayout from "../AppScreenLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@ui-kitten/components";
 import { StyleSheet, View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import { useNavigation } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import DeleteConfirmModal from "../../ui/modals/DeleteConfirmModal";
 import GlaubenssatzStatusSelect from "./GlaubenssatzStatusSelect";
 import TextInputModal from "../../ui/modals/TextInputModal";
 import Divider from "../../ui/Divider";
+import { GlaubenssatzStatusType } from "../../services/db";
 
 export default function GlaubenssatzDetailsScreen() {
   const gs = useSelector(getSelectedGs);
@@ -44,7 +45,7 @@ export default function GlaubenssatzDetailsScreen() {
       <ScreenHeader title={gs.title} />
       <View style={styles.body}>
         <GlaubenssatzStatusSelect />
-        {gs.status !== "PositiverGS" && (
+        {gs.status !== GlaubenssatzStatusType.PositiverGS && (
           <Button
             style={styles.button}
             onPress={() => {
@@ -57,7 +58,7 @@ export default function GlaubenssatzDetailsScreen() {
             Glaubenssatz prüfen
           </Button>
         )}
-        {gs.status === "PositiverGS" && (
+        {gs.status === GlaubenssatzStatusType.PositiverGS && (
           <Button
             style={styles.button}
             onPress={() => {

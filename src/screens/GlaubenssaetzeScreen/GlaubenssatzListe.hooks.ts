@@ -37,26 +37,36 @@ export const useGlaubenssatzListeData = () => {
       if (!gs.isUniversal && !filter.universelleGs) return;
 
       // @ts-ignore
-      if (gs.status === "Einschraenkend" && filter.einschraenkendeGs) {
+      if (
+        gs.status === GlaubenssatzStatusType.Einschraenkend &&
+        filter.einschraenkendeGs
+      ) {
         data[gs.id] = gs;
       }
       // @ts-ignore
-      if (gs.status === "OffenFuerZweifel" && filter.offenFuerZweifel) {
+      if (
+        gs.status === GlaubenssatzStatusType.OffenFuerZweifel &&
+        filter.offenFuerZweifel
+      ) {
         data[gs.id] = gs;
       }
       // @ts-ignore
-      if (gs.status === "MuseumAlterGS" && filter.museumAlterGs) {
+      if (
+        gs.status === GlaubenssatzStatusType.MuseumAlterGS &&
+        filter.museumAlterGs
+      ) {
         data[gs.id] = gs;
       }
       // @ts-ignore
-      if (gs.status === "PositiverGS" && filter.positiverGs) {
+      if (
+        gs.status === GlaubenssatzStatusType.PositiverGS &&
+        filter.positiverGs
+      ) {
         data[gs.id] = gs;
       }
       if (
         // @ts-ignore
-        (gs.status === "Leer" ||
-          gs.status == undefined ||
-          gs.status === GlaubenssatzStatusType.Leer) &&
+        (gs.status == undefined || gs.status === GlaubenssatzStatusType.Leer) &&
         filter.ohneStatus
       ) {
         data[gs.id] = gs;
@@ -76,6 +86,13 @@ export const useGlaubenssatzListeData = () => {
       ...newFilter,
     }));
   };
+
+  console.debug(
+    "filteredData length:",
+    filteredData.length,
+    "; filter:",
+    filter,
+  );
 
   return {
     filteredData,

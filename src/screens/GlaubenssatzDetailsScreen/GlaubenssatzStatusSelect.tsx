@@ -5,22 +5,23 @@ import { StyleSheet, View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import { GlaubenssatzStatusType } from "../../services/db";
 
-const statusOptions = Object.keys(GlaubenssatzStatusType);
+const statusOptions = Object.values(GlaubenssatzStatusType);
 
 export default function GlaubenssatzStatusSelect() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
 
-  if (gs == null) return null;
-
   // set initial status
   React.useEffect(() => {
+    if (gs == null) return;
     const index = statusOptions.findIndex(
       (statusOption) => statusOption === gs.status,
     );
     setSelectedIndex(new IndexPath(index));
-  }, []);
+  }, [gs]);
+
+  if (gs == null) return null;
 
   // update status in store on change
   const handleSelect = (index: IndexPath) => {
@@ -39,15 +40,12 @@ export default function GlaubenssatzStatusSelect() {
     <View style={styles.root}>
       <Select
         selectedIndex={selectedIndex}
-        onSelect={(index) => handleSelect(index)}
+        onSelect={(index) => handleSelect(index as IndexPath)}
         label={"Status"}
-        value={GlaubenssatzStatusType[statusOptions[selectedIndex.row]] ?? " "}
+        value={statusOptions[selectedIndex.row] ?? " "}
       >
         {statusOptions.map((statusOption) => (
-          <SelectItem
-            key={statusOption}
-            title={GlaubenssatzStatusType[statusOption]}
-          />
+          <SelectItem key={statusOption} title={statusOption} />
         ))}
       </Select>
     </View>
