@@ -4,13 +4,18 @@ import { Input, Text } from "@ui-kitten/components";
 import { View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import styles from "./questions.styles";
+import { debounce } from "lodash";
 
 export default function Question4() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
 
-  const handleChangeText = React.useCallback(
-    (text: string) => {
+  const [text, setText] = React.useState<string>(
+    gs?.q3_whatHappensIfYouBelieveTheThought ?? "",
+  );
+
+  const storeText = React.useCallback(
+    debounce((text: string) => {
       if (!gs) return;
       dispatch(
         actions.update({
@@ -18,9 +23,14 @@ export default function Question4() {
           q4_whoWouldYouBeWithoutTheThought: text,
         }),
       );
-    },
-    [gs],
+    }, 500),
+    [],
   );
+
+  const handleChangeText = (text: string) => {
+    setText(text);
+    storeText(text);
+  };
 
   return (
     <View style={styles.root}>
@@ -32,7 +42,7 @@ export default function Question4() {
         multiline={true}
         textStyle={styles.inputTextStyle}
         style={styles.inputTextContainer}
-        value={gs?.q4_whoWouldYouBeWithoutTheThought}
+        value={text}
         onChangeText={handleChangeText}
       />
     </View>

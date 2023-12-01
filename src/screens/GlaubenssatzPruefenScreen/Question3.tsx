@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, Text } from "@ui-kitten/components";
+import { debounce } from "lodash";
 import { View } from "react-native";
 import { actions, getSelectedGs } from "../../store/glaubenssaetzeSlice";
 import styles from "./questions.styles";
@@ -9,8 +10,10 @@ export default function Question3() {
   const gs = useSelector(getSelectedGs);
   const dispatch = useDispatch();
 
-  const handleChangeText = React.useCallback(
-    (text: string) => {
+  const [text, setText] = React.useState<string>(gs?.q3_whatHappensIfYouBelieveTheThought ?? "");
+
+  const storeText = React.useCallback(
+    debounce((text: string) => {
       if (!gs) return;
       dispatch(
         actions.update({
@@ -18,9 +21,14 @@ export default function Question3() {
           q3_whatHappensIfYouBelieveTheThought: text,
         }),
       );
-    },
-    [gs],
+    }, 500),
+    [],
   );
+
+  const handleChangeText = (text: string) => {
+    setText(text);
+    storeText(text);
+  };
 
   return (
     <View style={styles.root}>
@@ -42,7 +50,7 @@ export default function Question3() {
         multiline={true}
         textStyle={styles.inputTextStyle}
         style={styles.inputTextContainer}
-        value={gs?.q3_whatHappensIfYouBelieveTheThought}
+        value={text}
         onChangeText={handleChangeText}
       />
     </View>

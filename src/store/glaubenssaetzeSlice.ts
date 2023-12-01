@@ -70,6 +70,7 @@ export const glaubenssaetzeSlice = createSlice({
       >,
     ) => {
       const { payload } = action;
+      console.debug("updating glaubenssatz:", payload);
       state.entities[payload.id] = _.merge(state.entities[payload.id], payload);
       state.entities[payload.id].dateUpdated = new Date().toISOString();
     },
