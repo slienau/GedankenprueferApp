@@ -11,10 +11,12 @@ import Question4 from "./Question4";
 import Inversions from "./Inversions";
 import ScreenHeader from "../../ui/ScreenHeader";
 import Divider from "../../ui/Divider";
-import { NextIcon, PreviousIcon } from "../../ui/Icons";
+import { CheckIcon, NextIcon, PreviousIcon } from "../../ui/Icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GlaubenssatzPruefenScreen() {
   const gs = useSelector(getSelectedGs);
+  const navigation = useNavigation();
   const [step, setStep] = React.useState(1);
 
   if (gs == null) return null;
@@ -35,6 +37,10 @@ export default function GlaubenssatzPruefenScreen() {
     }
   };
 
+  const finish = () => {
+    navigation.goBack();
+  };
+
   return (
     <AppScreenLayout title={"Glaubenssatz prüfen"}>
       <ScrollView style={styles.body}>
@@ -52,22 +58,37 @@ export default function GlaubenssatzPruefenScreen() {
 
         <Divider />
 
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={previousStep}
-            disabled={step === 1}
-            accessoryLeft={PreviousIcon}
-          >
-            zurück
-          </Button>
+        <View
+          style={[
+            styles.buttonContainer,
+            step === 1 && styles.singleButtonContainer,
+          ]}
+        >
+          {step !== 1 && (
+            <Button
+              onPress={previousStep}
+              disabled={step === 1}
+              accessoryLeft={PreviousIcon}
+            >
+              zurück
+            </Button>
+          )}
 
-          <Button
-            onPress={nextStep}
-            disabled={step === 5}
-            accessoryRight={NextIcon}
-          >
-            weiter
-          </Button>
+          {step !== 5 && (
+            <Button
+              onPress={nextStep}
+              // disabled={step === 5}
+              accessoryRight={NextIcon}
+            >
+              weiter
+            </Button>
+          )}
+
+          {step === 5 && (
+            <Button onPress={finish} accessoryRight={CheckIcon}>
+              fertig
+            </Button>
+          )}
         </View>
       </ScrollView>
     </AppScreenLayout>
@@ -88,6 +109,9 @@ const styles = StyleSheet.create({
     // marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  singleButtonContainer: {
+    justifyContent: "flex-end",
   },
   divider: {
     marginVertical: 20,

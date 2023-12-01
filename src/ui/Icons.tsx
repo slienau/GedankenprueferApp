@@ -48,3 +48,7 @@ export const SaveIcon = (props: IconProps): IconElement => (
 export const CancelIcon = (props: IconProps): IconElement => (
   <Icon {...props} name="slash-outline" />
 );
+
+export const CheckIcon = (props: IconProps): IconElement => (
+  <Icon {...props} name="checkmark-outline" />
+);
