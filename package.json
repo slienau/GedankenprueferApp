@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "build:ios:release:device": "expo run:ios --configuration Release --device",
     "build:web": "expo export",
-    "serve:web": "npx serve dist"
+    "serve:web": "npx serve dist",
+    "deploy:web": "npm run build:web && netlify deploy --dir dist --prod"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
