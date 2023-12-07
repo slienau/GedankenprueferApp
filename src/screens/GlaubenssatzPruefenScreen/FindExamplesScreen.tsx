@@ -1,6 +1,8 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Platform } from "react-native";
 import { Card, Input, Text } from "@ui-kitten/components";
+import LottieView from "lottie-react-native";
+
 import AppScreenLayout from "../AppScreenLayout";
 import ScreenHeader from "../../ui/ScreenHeader";
 import EditButtons from "../../ui/EditButtons";
@@ -18,6 +20,7 @@ export type FindExamplesScreenProps = {
 const FindExamplesScreen: React.FC<FindExamplesScreenProps> = function (props) {
   const { statement, examples } = props;
 
+  const confettiRef = React.useRef<LottieView>(null);
   const [inputValue, setInputValue] = React.useState("");
   const [exampleToEdit, setExampleToEdit] = React.useState<string | null>(null);
   const [exampleToDelete, setExampleToDelete] = React.useState<string | null>(
@@ -30,8 +33,13 @@ const FindExamplesScreen: React.FC<FindExamplesScreenProps> = function (props) {
     inputRef.current?.focus();
   }, []);
 
+  const triggerConfetti = () => {
+    if (Platform.OS !== "web") confettiRef.current?.play(0);
+  };
+
   const addExample = () => {
     if (inputValue !== "") {
+      if (examples.length == 2) triggerConfetti();
       props.onAddExample(inputValue);
 
       setTimeout(() => {
@@ -56,72 +64,91 @@ const FindExamplesScreen: React.FC<FindExamplesScreenProps> = function (props) {
   };
 
   return (
-    <AppScreenLayout title={"Finde Beispiele"}>
-      <ScrollView style={styles.body}>
-        <ScreenHeader title={statement} />
-        <Text category={"s1"}>
-          Finde mindestens drei Beispiele, wie diese Aussage wahr ist.
-        </Text>
-        <View style={styles.examplesContainer}>
-          {examples.map((example, index) => (
-            <Card key={`${statement}-${example}`} style={styles.exampleCard}>
-              <View style={styles.exampleCardBody}>
-                <Text style={styles.exampleText}>
-                  {index + 1}) {example}
-                </Text>
-                <EditButtons
-                  onDelete={() => setExampleToDelete(example)}
-                  onEdit={() => setExampleToEdit(example)}
+    <>
+      <AppScreenLayout title={"Finde Beispiele"}>
+        <ScrollView style={styles.body}>
+          <ScreenHeader title={statement} />
+          <Text category={"s1"}>
+            Finde mindestens drei Beispiele, wie diese Aussage wahr ist.
+          </Text>
+          <View style={styles.examplesContainer}>
+            {examples.map((example, index) => (
+              <Card key={`${statement}-${example}`} style={styles.exampleCard}>
+                <View style={styles.exampleCardBody}>
+                  <Text style={styles.exampleText}>
+                    {index + 1}) {example}
+                  </Text>
+                  <EditButtons
+                    onDelete={() => setExampleToDelete(example)}
+                    onEdit={() => setExampleToEdit(example)}
+                  />
+                </View>
+              </Card>
+            ))}
+            <Card>
+              <View style={styles.inputCard}>
+                <Text>{examples.length + 1}) </Text>
+                <Input
+                  ref={inputRef}
+                  placeholder={"Beispiel hinzufügen"}
+                  value={inputValue}
+                  onChangeText={setInputValue}
+                  onSubmitEditing={addExample}
+                  style={styles.input}
                 />
               </View>
             </Card>
-          ))}
-          <Card>
-            <View style={styles.inputCard}>
-              <Text>{examples.length + 1}) </Text>
-              <Input
-                ref={inputRef}
-                placeholder={"Beispiel hinzufügen"}
-                value={inputValue}
-                onChangeText={setInputValue}
-                onSubmitEditing={addExample}
-                style={styles.input}
-              />
-            </View>
-          </Card>
-        </View>
-      </ScrollView>
+          </View>
+        </ScrollView>
 
-      <DeleteConfirmModal
-        title={"Beispiel löschen?"}
-        onConfirm={deleteExample}
-        onCancel={() => {
-          setExampleToDelete(null);
-        }}
-        isVisible={exampleToDelete != null}
-      >
-        <Text>
-          Möchtest du das Beispiel "
-          <Text style={{ fontWeight: "bold" }}>{exampleToDelete ?? ""}</Text>"
-          löschen?
-        </Text>
-      </DeleteConfirmModal>
+        <DeleteConfirmModal
+          title={"Beispiel löschen?"}
+          onConfirm={deleteExample}
+          onCancel={() => {
+            setExampleToDelete(null);
+          }}
+          isVisible={exampleToDelete != null}
+        >
+          <Text>
+            Möchtest du das Beispiel "
+            <Text style={{ fontWeight: "bold" }}>{exampleToDelete ?? ""}</Text>"
+            löschen?
+          </Text>
+        </DeleteConfirmModal>
 
-      <TextInputModal
-        title={"Beispiel umbenennen"}
-        placeholder={exampleToEdit ?? ""}
-        initialText={exampleToEdit ?? ""}
-        isVisible={exampleToEdit != null}
-        onCancel={() => {
-          setExampleToEdit(null);
-        }}
-        onConfirm={editExample}
+        <TextInputModal
+          title={"Beispiel umbenennen"}
+          placeholder={exampleToEdit ?? ""}
+          initialText={exampleToEdit ?? ""}
+          isVisible={exampleToEdit != null}
+          onCancel={() => {
+            setExampleToEdit(null);
+          }}
+          onConfirm={editExample}
+        />
+      </AppScreenLayout>
+      <LottieView
+        source={require("../../../assets/lottie-confetti.json")}
+        ref={confettiRef}
+        autoPlay={false}
+        loop={false}
+        style={styles.lottie}
+        resizeMode="cover"
       />
-    </AppScreenLayout>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  lottie: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
+    pointerEvents: "none",
+  },
   header: {
     padding: 20,
     paddingBottom: 0,
